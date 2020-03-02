@@ -8,18 +8,32 @@ export interface ThemeColors {
   error: CSS.ColorProperty;
   heading: CSS.ColorProperty;
   text: CSS.ColorProperty;
+  text2: CSS.ColorProperty;
   disabled: CSS.ColorProperty;
   border: CSS.ColorProperty;
+  heading2: CSS.ColorProperty;
+  white: CSS.ColorProperty;
+  black: CSS.ColorProperty;
+  active: CSS.ColorProperty;
+  gray: CSS.ColorProperty;
+  gray2: CSS.ColorProperty;
 }
 
 export const colors: ThemeColors = {
   primary: '#423EA2',
-  link: '#1890ff',
-  success: '#52c41a',
   warning: '#faad14',
-  error: '#e84118',
-  heading: '#423EA2',
-  text: '#000',
-  disabled: '#f5222d',
+  error: '#F96D8C',
+  heading: '#464A94',
+  heading2: '#7A54B3',
+  text: '#9696A1',
+  text2: '#7D7DB7',
+  disabled: '#A4A5D6',
+  active: '#30D9B9',
+  success: '#43DEC1',
   border: '#423EA2',
+  black: '#000e1a',
+  white: '#fff',
+  gray: '#F7F6F9',
+  gray2: '#333333',
+  link: '#7D7DB7',
 };

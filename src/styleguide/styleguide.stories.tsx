@@ -1,6 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import styled from 'styled-components';
+
 import Typography from './Typography';
 import { colors } from './colors';
 import { breakpoints } from './theme';
@@ -65,7 +66,10 @@ storiesOf('Styleguide ', module)
         {Object.entries(space).map(obj => (
           <div key={obj[0]}>
             <SmallParagraph m={2}>
-              <strong>{obj[1]}px</strong>
+              <strong>
+                {obj[1]}
+                px
+              </strong>
             </SmallParagraph>
             <SmallParagraph m={2}>{obj[0]}</SmallParagraph>
           </div>

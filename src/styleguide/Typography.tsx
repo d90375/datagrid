@@ -27,9 +27,10 @@ interface TypographyComponentProps {
 }
 
 const createComponent: (textStyle: StyledSystemProps, displayName: string) => React.FC<StyledSystemProps> = (textStyle, displayName) => {
-  const component: React.FC<StyledSystemProps> = (props, { children }) => (
+  const component: React.FC<StyledSystemProps> = props => (
     <DynamicStyledSystemComponent {...textStyle} {...props}>
-      {children}
+      {/* eslint-disable-next-line react/destructuring-assignment */}
+      {props.children}
     </DynamicStyledSystemComponent>
   );
   component.displayName = displayName;
