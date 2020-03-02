@@ -1,46 +1,24 @@
-// import React from 'react';
-// import styled from 'styled-components';
-// import theme from 'styled-theming';
-// import { ColorsKeys } from '../static/theme';
-//
-// const backgroundColor = theme.variants('mode', 'variant', {
-//   default: { light: 'gray', dark: 'darkgray' },
-//   primary: { light: 'blue', dark: 'darkblue' },
-//   success: { light: 'green', dark: 'darkgreen' },
-//   warning: { light: 'orange', dark: 'darkorange' },
-// });
-//
-// const Button = styled.div<any>`
-//   width: 100px;
-//   height: 100px;
-//   background-color: ${backgroundColor};
-// `;
-//
-// const App = () => {
-//   return (
-//     <div>
-//       <Button variant="default" />
-//       <Button variant="primary" />
-//       <Button variant="success" />
-//       <Button variant="warning" />
-//     </div>
-//   );
-// };
-//
-// export default App;
-
-import { addDecorator, configure } from '@storybook/react';
-import { ThemeProvider } from 'styled-components';
 import React from 'react';
-import { Router } from 'react-router-dom';
-import { createBrowserHistory } from 'history';
+import { ThemeProvider } from 'styled-components';
+import { defaultTheme } from './styleguide/theme';
 
-const history = createBrowserHistory();
+import logo from './logo.svg';
+import './App.css';
 
-addDecorator(story => (
-    <ThemeProvider theme={{}}>
-        <Router history={history}>{story()}</Router>
+const App: React.FC = () => {
+  return (
+    <ThemeProvider theme={defaultTheme}>
+      <div className="App">
+        <header className="App-header">
+          <img src={logo} className="App-logo" alt="logo" />
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi, numquam!</p>
+          <a className="App-link" href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
+            Learn React
+          </a>
+        </header>
+      </div>
     </ThemeProvider>
-));
+  );
+};
 
-configure(require.context('../src', true, /\.stories\.tsx$/), module);
+export default App;
