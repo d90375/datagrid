@@ -13,4 +13,10 @@ addDecorator(story => (
     </ThemeProvider>
 ));
 
-configure(require.context('../src', true, /\.stories\.tsx$/), module);
+const req = require.context('../src/styleguide', true, /\.stories\.tsx$/);
+function loadStories() {
+    req.keys().forEach(req);
+    console.log(req.keys())
+}
+
+configure(loadStories, module);

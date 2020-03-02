@@ -5,6 +5,8 @@ import { defaultTheme } from './styleguide/theme';
 
 import logo from './logo.svg';
 import './App.css';
+import Header from './containers/ui/Header';
+import Main from './containers/ui/Main';
 
 const Button = styled.button`
   background-color: ${({ theme }) => theme.colors.primary};
@@ -23,16 +25,9 @@ const Button = styled.button`
 const App: React.FC = () => {
   return (
     <ThemeProvider theme={defaultTheme}>
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi, numquam!</p>
-          <a className="App-link" href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
-            Learn React
-          </a>
-          <Button>Ku-ku</Button>
-        </header>
-      </div>
+      <Header />
+      <Main />
+      <Button>Ku-ku</Button>
     </ThemeProvider>
   );
 };
