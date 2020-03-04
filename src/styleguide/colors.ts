@@ -22,10 +22,10 @@ export interface ThemeColors {
 export const colors: ThemeColors = {
   primary: '#423EA2',
   warning: '#faad14',
-  error: '#F96D8C',
+  error: '#EE7490',
   heading: '#464A94',
   heading2: '#7A54B3',
-  text: '#9696A1',
+  text: '#8B8BBC',
   text2: '#7D7DB7',
   disabled: '#A4A5D6',
   active: '#30D9B9',
