@@ -1,75 +1,60 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableRow from '@material-ui/core/TableRow';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Switch from '@material-ui/core/Switch';
-import TableHeader from '../TableHeader/TableHeader';
+import MainTable from '../MainTable/MainTable';
+import data from '../../config/data/hackerData';
+import { Row, Column } from '../../interfaces/interfaces';
 
-interface Column {
-  id: 'name' | 'code' | 'population' | 'size' | 'density';
-  label: string;
-  minWidth?: number;
-  align?: 'right';
-  format?: (value: number) => string;
-}
+// ISO\u00a0Code
+// Size\u00a0(km\u00b2)
 
 const columns: Column[] = [
-  { id: 'name', label: 'Name', minWidth: 170 },
-  { id: 'code', label: 'ISO\u00a0Code', minWidth: 100 },
+  { id: 'id', label: 'id', minWidth: 50 },
+  { id: 'firstName', label: 'first name', minWidth: 100 },
   {
-    id: 'population',
-    label: 'Population',
+    id: 'lastName',
+    label: 'last name',
+    minWidth: 80,
+    align: 'right',
+  },
+  // {
+  //   id: 'address',
+  //   label: 'address',
+  //   minWidth: 170,
+  //   align: 'right',
+  // },
+  {
+    id: 'status',
+    label: 'status',
     minWidth: 170,
     align: 'right',
+  },
+  {
+    id: 'ageCategory',
+    label: 'age category',
+    minWidth: 170,
+    align: 'right',
+  },
+  {
+    id: 'salary',
+    label: 'salary',
+    minWidth: 170,
+    align: 'center',
     format: (value: number) => value.toLocaleString(),
   },
   {
-    id: 'size',
-    label: 'Size\u00a0(km\u00b2)',
+    id: 'distance',
+    label: 'distance',
     minWidth: 170,
-    align: 'right',
-    format: (value: number) => value.toLocaleString(),
+    align: 'center',
+    format: (value: number) => value.toFixed(5),
   },
-  {
-    id: 'density',
-    label: 'Density',
-    minWidth: 170,
-    align: 'right',
-    format: (value: number) => value.toFixed(2),
-  },
-];
-
-interface Data {
-  name: string;
-  code: string;
-  population: number;
-  size: number;
-  density: number;
-}
-
-function createData(name: string, code: string, population: number, size: number): Data {
-  const density = population / size;
-  return { name, code, population, size, density };
-}
-
-const rows = [
-  createData('India', 'IN', 1324171354, 3287263),
-  createData('China', 'CN', 1403500365, 9596961),
-  createData('Italy', 'IT', 60483973, 301340),
-  createData('United States', 'US', 327167434, 9833520),
-  createData('Canada', 'CA', 37602103, 9984670),
-  createData('Australia', 'AU', 25475400, 7692024),
-  createData('India', 'IN', 1324171354, 3287263),
-  createData('China', 'CN', 1403500365, 9596961),
-  createData('Italy', 'IT', 60483973, 301340),
-  createData('United States', 'US', 327167434, 9833520),
-  createData('Canada', 'CA', 37602103, 9984670),
-  createData('Australia', 'AU', 25475400, 7692024),
+  // {
+  //   id: 'hackedDate',
+  //   label: 'hacked date',
+  //   minWidth: 170,
+  //   align: 'right',
+  // },
 ];
 
 //
@@ -81,23 +66,11 @@ const rows = [
 //         },
 //       },
 //     }),
-// )(TableRow);
+// )(TableRow);]
 
 const useStyles = makeStyles({
   root: {
     width: '100%',
-  },
-  container: {
-    borderRadius: '.4rem',
-  },
-  paper: {
-    // overflow: 'scroll',
-    marginLeft: '2rem',
-    marginRight: '2rem',
-    marginTop: '-2rem',
-    '&.MuiTableContainer-root': {
-      width: 'auto',
-    },
   },
   topBackGround: {
     borderTopLeftRadius: '.4rem',
@@ -106,54 +79,24 @@ const useStyles = makeStyles({
     // backgroundColor: 'rgb(70, 74, 148)',
     background: 'linear-gradient(90deg, rgba(70, 74, 148, 1) 5%, rgba(126, 83, 180, 1) 81%, rgba(115, 82, 173, 1) 100%)',
   },
-  main: {
-    backgroundColor: '#fff',
-    borderRadius: '.4rem',
-    boxShadow: '0 25px 50px -12px rgba(0,0,0,.25)',
-    marginBottom: '4rem',
-    minHeight: '500px',
-  },
-  control: {
-    margin: '.5rem 0  .5rem  2rem ',
-  },
 });
 
-const Main = () => {
+const Main: React.FC = () => {
   const classes = useStyles();
-  const [dense, setDense] = React.useState(false);
 
-  const handleChangeDense = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setDense(event.target.checked);
-  };
+  const [rows, setRows] = useState<Row[]>([]);
+
+  useEffect(() => {
+    (async function load() {
+      setRows(data);
+    })();
+  }, []);
 
   return (
     <main>
       <Paper elevation={4}>
         <div className={classes.topBackGround} />
-        <Paper elevation={3} className={classes.paper}>
-          <TableContainer className={classes.container}>
-            <Table size={dense ? 'small' : 'medium'} stickyHeader aria-label="data grid">
-              <TableHeader columns={columns} />
-              <TableBody>
-                {rows.map(row => {
-                  return (
-                    <TableRow style={{ height: dense ? 33 : 53 }} hover role="checkbox" tabIndex={-1} key={row.code}>
-                      {columns.map(column => {
-                        const value = row[column.id];
-                        return (
-                          <TableCell key={column.id} align={column.align}>
-                            {column.format && typeof value === 'number' ? column.format(value) : value}
-                          </TableCell>
-                        );
-                      })}
-                    </TableRow>
-                  );
-                })}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Paper>
-        <FormControlLabel className={classes.control} control={<Switch checked={dense} onChange={handleChangeDense} />} label="Magic" />
+        <MainTable rows={rows} columns={columns} />
       </Paper>
     </main>
   );

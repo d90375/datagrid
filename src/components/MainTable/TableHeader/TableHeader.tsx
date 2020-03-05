@@ -1,13 +1,12 @@
 import React from 'react';
-
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
-
 import { withStyles, Theme, createStyles } from '@material-ui/core/styles';
+import { Column } from '../../../interfaces/interfaces';
 
 interface PropTypes {
-  columns: any;
+  columns: Column[];
 }
 
 const StyledTableCell = withStyles((theme: Theme) =>
@@ -25,7 +24,7 @@ const TableHeader = ({ columns }: PropTypes) => {
     <>
       <TableHead>
         <TableRow>
-          {columns.map((column: { id: string | number | undefined; align: any; minWidth: any; label: React.ReactNode }) => (
+          {columns.map(column => (
             <StyledTableCell key={column.id} align={column.align} style={{ minWidth: column.minWidth }}>
               {column.label}
             </StyledTableCell>
