@@ -7,6 +7,8 @@ enum AgeCategory {
   OLDMAN = 'oldMan',
 }
 
+export type Order = 'asc' | 'desc';
+
 interface Address {
   streetAddress: string;
   city: string;
@@ -18,18 +20,19 @@ export interface Row {
   id: number;
   firstName: string;
   lastName: string;
-  address: Address;
-  status: boolean;
-  ageCategory: any;
+  // address: Address;
+  // status: boolean;
+  // ageCategory: any;
   salary: number;
   distance: number;
   hackedDate: string;
 }
 
 export interface Column {
-  id: 'id' | 'firstName' | 'lastName' | 'address' | 'status' | 'ageCategory' | 'salary' | 'distance' | 'hackedDate';
+  id: 'id' | 'firstName'| 'lastName' | 'salary' | 'distance' | 'hackedDate';
   label: string;
   minWidth?: number;
+  disablePadding?: boolean;
   align?: 'right' | 'center' | 'left';
   format?: (value: number) => string;
 }

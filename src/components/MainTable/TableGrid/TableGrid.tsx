@@ -2,33 +2,29 @@ import React from 'react';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 import TableBody from '@material-ui/core/TableBody';
-import { Column, Row } from '../../../interfaces/interfaces';
+import Checkbox from '@material-ui/core/Checkbox';
+
+import getComparator from './helpers/getComparator';
+import stableSort from './helpers/stableSort';
+
+import { Column, Row, Order } from '../../../interfaces/interfaces';
 
 interface PropTypes {
   columns: Column[];
   rows: Row[];
   dense: boolean;
+  order: Order;
+  orderBy: string;
+  page: number;
+  rowsPerPage: number;
+  isSelected: (name: string) => boolean;
+  handleClick: (event: React.MouseEvent<unknown>, name: string) => void;
 }
 
-const TableGrid = ({ rows, columns, dense }: PropTypes) => {
+const TableGrid = ({ rows, columns, dense, order, orderBy, page, rowsPerPage, isSelected, handleClick }: PropTypes) => {
   return (
     <>
-      <TableBody>
-        {rows.map((row: any) => {
-          return (
-            <TableRow style={{ height: dense ? 33 : 53 }} hover role="checkbox" tabIndex={-1} key={row.id}>
-              {columns.map(column => {
-                const value = row[column.id];
-                return (
-                  <TableCell key={column.id} align={column.align}>
-                    {column.format && typeof value === 'number' ? column.format(value) : value}
-                  </TableCell>
-                );
-              })}
-            </TableRow>
-          );
-        })}
-      </TableBody>
+
     </>
   );
 };
