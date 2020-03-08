@@ -1,12 +1,8 @@
 import React from 'react';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
-import { makeStyles } from '@material-ui/core/styles';
 
-interface PropTypes {
-  handleChangeDense: any;
-  dense: boolean;
-}
+import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles({
   control: {
@@ -14,7 +10,7 @@ const useStyles = makeStyles({
   },
 });
 
-const ControlLabel = ({ handleChangeDense, dense }: PropTypes) => {
+const ControlLabel = ({ handleChangeDense, dense }) => {
   const classes = useStyles();
   return (
     <>

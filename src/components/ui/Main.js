@@ -6,12 +6,10 @@ import data from '../../config/data/hackerData';
 import MainTable from '../MainTable/MainTable';
 import TableNav from '../MainTable/TableNav/TableNav';
 
-import { Row, Column } from '../../interfaces/interfaces';
-
 // ISO\u00a0Code
 // Size\u00a0(km\u00b2)
 
-const columns: Column[] = [
+const columns = [
   { id: 'id', label: 'id', disablePadding: true, minWidth: 50 },
   // { id: 'firstName', label: 'first name', minWidth: 100 },
   { id: 'id', label: 'id', disablePadding: true, minWidth: 50 },
@@ -66,8 +64,8 @@ const columns: Column[] = [
 //     }),
 // )(TableRow);]
 
-const Main: React.FC = () => {
-  const [rows, setRows] = useState<Row[]>([]);
+const Main = () => {
+  const [rows, setRows] = useState([]);
 
   useEffect(() => {
     (async function load() {
