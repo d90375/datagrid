@@ -1,5 +1,8 @@
 import React from 'react';
+
 import { makeStyles } from '@material-ui/core/styles';
+
+import Search from './Search/Search';
 
 const useStyles = makeStyles({
   nav: {
@@ -11,11 +14,12 @@ const useStyles = makeStyles({
   },
 });
 
-const TableNav = () => {
+const TableNav = ({ onSearch }) => {
   const classes = useStyles();
   return (
     <>
       <div className={classes.nav} />
+      <Search onSearch={onSearch} />
     </>
   );
 };

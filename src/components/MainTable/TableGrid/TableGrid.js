@@ -8,6 +8,10 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import getComparator from './helpers/getComparator';
 import stableSort from './helpers/stableSort';
+import CheckBoxCell from './CheckBoxCell/CheckBoxCell';
+import NumberCell from './NumberCell/NumberCell';
+import BooleanCell from './BooleanCell/BooleanCell';
+import StringCell from './StringCell/StringCell';
 
 // const useStyles = makeStyles(theme => ({
 //   root: {
@@ -65,9 +69,8 @@ const TableGrid = ({ rows, order, orderBy, page, rowsPerPage, isSelected, handle
       <TableBody>
         {stableSort(rows, getComparator(order, orderBy))
           .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-          .map((row, index) => {
+          .map(row => {
             const isItemSelected = isSelected(row.id);
-            const labelId = `enhanced-table-checkbox-${index}`;
             return (
               <TableRow
                 hover
@@ -78,15 +81,11 @@ const TableGrid = ({ rows, order, orderBy, page, rowsPerPage, isSelected, handle
                 key={row.id}
                 selected={isItemSelected}
               >
-                <TableCell padding="checkbox">
-                  <Checkbox checked={isItemSelected} inputProps={{ 'aria-labelledby': labelId }} />
-                </TableCell>
-                <TableCell component="th" id={labelId} scope="row" padding="none">
-                  {row.id}
-                </TableCell>
-                <TableCell align="right">{row.firstName}</TableCell>
-                <TableCell align="right">{row.lastName}</TableCell>
-                <TableCell align="right">{row.status ? 'ok' : 'not'}</TableCell>
+                <CheckBoxCell isItemSelected={isItemSelected} />
+                <NumberCell inputLabel={row.id} />
+                <StringCell inputLabel={row.firstName} />
+                <StringCell inputLabel={row.lastName} />
+                <BooleanCell inputLabel={row.status} />
                 {/*<TableCell align="right">{row.carbs}</TableCell>*/}
                 {/*<TableCell align="right">{row.protein}</TableCell>*/}
               </TableRow>

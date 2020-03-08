@@ -7,57 +7,10 @@ import MainTable from '../MainTable/MainTable';
 import TableNav from '../MainTable/TableNav/TableNav';
 import PreLoader from './PreLoader/PreLoader';
 
+import columns from '../../config/column';
+
 // ISO\u00a0Code
 // Size\u00a0(km\u00b2)
-
-const columns = [
-  { id: 'id', label: 'id', disablePadding: true, minWidth: 50 },
-  { id: 'firstName', label: 'first name', minWidth: 100 },
-  {
-    id: 'lastName',
-    label: 'last name',
-    minWidth: 100,
-    align: 'center',
-  },
-  // {
-  //   id: 'address',
-  //   label: 'address',
-  //   minWidth: 170,
-  //   align: 'right',
-  // },
-  {
-    id: 'status',
-    label: 'status',
-    minWidth: 50,
-    align: 'right',
-  },
-  // {
-  //   id: 'ageCategory',
-  //   label: 'age category',
-  //   minWidth: 170,
-  //   align: 'right',
-  // },
-  // {
-  //   id: 'salary',
-  //   label: 'salary',
-  //   minWidth: 170,
-  //   align: 'center',
-  //   format: (value: number) => value.toLocaleString(),
-  // },
-  // {
-  //   id: 'distance',
-  //   label: 'distance',
-  //   minWidth: 170,
-  //   align: 'center',
-  //   format: (value: number) => value.toFixed(5),
-  // },
-  // {
-  //   id: 'hackedDate',
-  //   label: 'hacked date',
-  //   minWidth: 170,
-  //   align: 'right',
-  // },
-];
 
 //
 // const StyledTableRow = withStyles((theme: Theme) =>
@@ -73,6 +26,11 @@ const columns = [
 const Main = () => {
   const [rows, setRows] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [search, setSearch] = useState('');
+
+  const searchHandler = inputSearch => {
+    setSearch(inputSearch);
+  };
 
   useEffect(() => {
     (async function load() {
@@ -90,10 +48,17 @@ const Main = () => {
     })();
   }, []);
 
+  useEffect(() => {
+    const result = rows.filter(
+      item => item.firstName.toLowerCase().includes(search.toLowerCase()) || item.lastName.toLowerCase().includes(search.toLowerCase())
+    );
+    setRows(result);
+  }, [rows, search]);
+
   return (
     <main>
       <Paper elevation={4}>
-        <TableNav />
+        <TableNav onSearch={searchHandler} />
         {isLoading ? <MainTable rows={rows} columns={columns} /> : <PreLoader />}
       </Paper>
     </main>
