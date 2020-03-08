@@ -25,6 +25,12 @@ const columns = [
   //   minWidth: 170,
   //   align: 'right',
   // },
+  {
+    id: 'status',
+    label: 'status',
+    minWidth: 50,
+    align: 'right',
+  },
   // {
   //   id: 'ageCategory',
   //   label: 'age category',
@@ -80,7 +86,7 @@ const Main = () => {
       setRows(data);
       setTimeout(() => {
         setIsLoading(true);
-      }, 2000);
+      }, 0);
     })();
   }, []);
 

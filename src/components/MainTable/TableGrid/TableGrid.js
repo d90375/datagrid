@@ -86,7 +86,7 @@ const TableGrid = ({ rows, order, orderBy, page, rowsPerPage, isSelected, handle
                 </TableCell>
                 <TableCell align="right">{row.firstName}</TableCell>
                 <TableCell align="right">{row.lastName}</TableCell>
-                {/*<TableCell align="right">{row.lastName}</TableCell>*/}
+                <TableCell align="right">{row.status ? 'ok' : 'not'}</TableCell>
                 {/*<TableCell align="right">{row.carbs}</TableCell>*/}
                 {/*<TableCell align="right">{row.protein}</TableCell>*/}
               </TableRow>
