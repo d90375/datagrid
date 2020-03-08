@@ -3,10 +3,10 @@ import clsx from 'clsx';
 import Toolbar from '@material-ui/core/Toolbar';
 import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton';
+import Typography from '@material-ui/core/Typography';
 
 import { makeStyles, lighten } from '@material-ui/core/styles';
 
-import Typography from '@material-ui/core';
 import PropTypes from 'prop-types';
 
 import DeleteIcon from '@material-ui/icons/Delete';

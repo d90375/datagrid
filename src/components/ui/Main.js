@@ -5,20 +5,20 @@ import data from '../../config/data/hackerData';
 
 import MainTable from '../MainTable/MainTable';
 import TableNav from '../MainTable/TableNav/TableNav';
+import PreLoader from './PreLoader/PreLoader';
 
 // ISO\u00a0Code
 // Size\u00a0(km\u00b2)
 
 const columns = [
   { id: 'id', label: 'id', disablePadding: true, minWidth: 50 },
-  // { id: 'firstName', label: 'first name', minWidth: 100 },
-  { id: 'id', label: 'id', disablePadding: true, minWidth: 50 },
-  // {
-  //   id: 'lastName',
-  //   label: 'last name',
-  //   minWidth: 80,
-  //   align: 'right',
-  // },
+  { id: 'firstName', label: 'first name', minWidth: 100 },
+  {
+    id: 'lastName',
+    label: 'last name',
+    minWidth: 100,
+    align: 'center',
+  },
   // {
   //   id: 'address',
   //   label: 'address',
@@ -66,10 +66,21 @@ const columns = [
 
 const Main = () => {
   const [rows, setRows] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     (async function load() {
+      let id = 0;
+      data.map(item => {
+        id += 1;
+        // eslint-disable-next-line no-param-reassign
+        item.id = id;
+        return item.id;
+      });
       setRows(data);
+      setTimeout(() => {
+        setIsLoading(true);
+      }, 2000);
     })();
   }, []);
 
@@ -77,7 +88,7 @@ const Main = () => {
     <main>
       <Paper elevation={4}>
         <TableNav />
-        <MainTable rows={rows} columns={columns} />
+        {isLoading ? <MainTable rows={rows} columns={columns} /> : <PreLoader />}
       </Paper>
     </main>
   );

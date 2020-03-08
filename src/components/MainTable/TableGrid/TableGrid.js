@@ -57,7 +57,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const TableGrid = ({ rows, columns, dense, order, orderBy, page, rowsPerPage, isSelected, handleClick }) => {
+const TableGrid = ({ rows, order, orderBy, page, rowsPerPage, isSelected, handleClick, dense, emptyRows }) => {
   const classes = useStyles();
 
   return (
@@ -66,29 +66,29 @@ const TableGrid = ({ rows, columns, dense, order, orderBy, page, rowsPerPage, is
         {stableSort(rows, getComparator(order, orderBy))
           .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
           .map((row, index) => {
-            const isItemSelected = isSelected(row.name);
+            const isItemSelected = isSelected(row.id);
             const labelId = `enhanced-table-checkbox-${index}`;
-
             return (
               <TableRow
                 hover
-                onClick={event => handleClick(event, row.name)}
+                onClick={event => handleClick(event, row.id)}
                 role="checkbox"
                 aria-checked={isItemSelected}
                 tabIndex={-1}
-                key={row.name}
+                key={row.id}
                 selected={isItemSelected}
               >
                 <TableCell padding="checkbox">
                   <Checkbox checked={isItemSelected} inputProps={{ 'aria-labelledby': labelId }} />
                 </TableCell>
                 <TableCell component="th" id={labelId} scope="row" padding="none">
-                  {row.name}
+                  {row.id}
                 </TableCell>
-                <TableCell align="right">{row.calories}</TableCell>
-                <TableCell align="right">{row.fat}</TableCell>
-                <TableCell align="right">{row.carbs}</TableCell>
-                <TableCell align="right">{row.protein}</TableCell>
+                <TableCell align="right">{row.firstName}</TableCell>
+                <TableCell align="right">{row.lastName}</TableCell>
+                {/*<TableCell align="right">{row.lastName}</TableCell>*/}
+                {/*<TableCell align="right">{row.carbs}</TableCell>*/}
+                {/*<TableCell align="right">{row.protein}</TableCell>*/}
               </TableRow>
             );
           })}

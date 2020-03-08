@@ -40,8 +40,6 @@ const theme = createMuiTheme({
       default: '#f7f6f9',
     },
   },
-  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-  // @ts-ignore
   custom: {
     color: {
       primary: '#5659A3',

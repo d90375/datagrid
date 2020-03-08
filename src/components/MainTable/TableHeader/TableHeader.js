@@ -51,7 +51,7 @@ const TableHeader = ({ columns, onSelectAllClick, order, orderBy, numSelected, r
               inputProps={{ 'aria-label': 'select all desserts' }}
             />
           </TableCell>
-          {columns.map(headCell => (
+          {columns.map((headCell, index) => (
             <TableCell
               key={headCell.id}
               align={headCell.numeric ? 'right' : 'left'}

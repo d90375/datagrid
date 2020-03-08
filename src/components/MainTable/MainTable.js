@@ -9,10 +9,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import TableHeader from './TableHeader/TableHeader';
 import ControlLabel from './ControlLabel/ControlLabel';
 import TableGrid from './TableGrid/TableGrid';
-import TableToolBar from "./TableToolBar/TableToolBar";
-
-
-
+import TableToolBar from './TableToolBar/TableToolBar';
 
 // const useStyles = makeStyles({
 //   container: {
@@ -43,17 +40,6 @@ const useStyles = makeStyles(theme => ({
   },
   table: {
     minWidth: 750,
-  },
-  visuallyHidden: {
-    border: 0,
-    clip: 'rect(0 0 0 0)',
-    height: 1,
-    margin: -1,
-    overflow: 'hidden',
-    padding: 0,
-    position: 'absolute',
-    top: 20,
-    width: 1,
   },
 }));
 
@@ -118,7 +104,7 @@ const MainTable = ({ columns, rows }) => {
   return (
     <div className={classes.root}>
       <Paper elevation={3} className={classes.paper}>
-        <TableToolBar numSelected={selected.length} />
+        <TableToolBar emptyRows={emptyRows} numSelected={selected.length} />
         <TableContainer className={classes.container}>
           <Table
             className={classes.table}
@@ -136,26 +122,27 @@ const MainTable = ({ columns, rows }) => {
               onRequestSort={handleRequestSort}
               rowCount={rows.length}
             />
-
             <TableGrid
-              dense={dense}
               rows={rows}
-              columns={columns}
               order={order}
               orderBy={orderBy}
+              page={page}
+              rowsPerPage={rowsPerPage}
               isSelected={isSelected}
               handleClick={handleClick}
+              dense={dense}
+              emptyRows={emptyRows}
             />
           </Table>
         </TableContainer>
         <TablePagination
-            rowsPerPageOptions={[5, 10, 25]}
-            component="div"
-            count={rows.length}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onChangePage={handleChangePage}
-            onChangeRowsPerPage={handleChangeRowsPerPage}
+          rowsPerPageOptions={[5, 10, 25]}
+          component="div"
+          count={rows.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onChangePage={handleChangePage}
+          onChangeRowsPerPage={handleChangeRowsPerPage}
         />
       </Paper>
       <ControlLabel handleChangeDense={handleChangeDense} dense={dense} />
