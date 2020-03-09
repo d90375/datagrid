@@ -35,12 +35,15 @@ const Main = () => {
   useEffect(() => {
     (async function load() {
       let id = 0;
-      data.map(item => {
-        id += 1;
-        // eslint-disable-next-line no-param-reassign
-        item.id = id;
-        return item.id;
-      });
+      data
+        .slice(0)
+        .reverse()
+        .map(item => {
+          id += 1;
+          // eslint-disable-next-line no-param-reassign
+          item.id = id;
+          return item.id;
+        });
       setRows(data);
       setTimeout(() => {
         setIsLoading(true);
@@ -49,11 +52,15 @@ const Main = () => {
   }, []);
 
   useEffect(() => {
-    const result = rows.filter(
-      item => item.firstName.toLowerCase().includes(search.toLowerCase()) || item.lastName.toLowerCase().includes(search.toLowerCase())
-    );
-    setRows(result);
-  }, [rows, search]);
+    if (search !== '') {
+      const result = data.filter(
+        item => item.firstName.toLowerCase().includes(search.toLowerCase()) || item.lastName.toLowerCase().includes(search.toLowerCase())
+      );
+      setRows(result);
+    } else {
+      setRows(data);
+    }
+  }, [search]);
 
   return (
     <main>

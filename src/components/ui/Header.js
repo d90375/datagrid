@@ -1,5 +1,6 @@
 import React from 'react';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
+import Link from '@material-ui/core/Link';
 
 const useStyles = makeStyles(theme => ({
   root: {},
@@ -14,8 +15,10 @@ const Header = () => {
   return (
     <header className={classes.root}>
       <h1 className={classes.title}>
-        Data
-        <span className={classes.text}>Grid </span>
+        <Link href="/" color="inherit" style={{ textDecoration: 'none' }}>
+          Data
+          <span className={classes.text}>Grid </span>
+        </Link>
       </h1>
     </header>
   );

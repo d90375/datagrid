@@ -123,6 +123,7 @@ const MainTable = ({ columns, rows }) => {
               rowCount={rows.length}
             />
             <TableGrid
+              columns={columns}
               rows={rows}
               order={order}
               orderBy={orderBy}

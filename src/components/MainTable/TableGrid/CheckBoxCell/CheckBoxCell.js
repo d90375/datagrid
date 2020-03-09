@@ -6,7 +6,7 @@ const CheckBoxCell = ({ isItemSelected }) => {
   return (
     <>
       <TableCell padding="checkbox">
-        <Checkbox component="th" scope="row" checked={isItemSelected} />
+        <Checkbox checked={isItemSelected} />
       </TableCell>
     </>
   );

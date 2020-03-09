@@ -4,9 +4,17 @@ import Button from '@material-ui/core/Button';
 
 const Search = ({ onSearch }) => {
   const [value, setValue] = useState('');
+  // const [isLoading, setIsLoading] = useState(false);
 
   const valueChangeHandler = event => {
     setValue(event.target.value);
+  };
+
+  const keyPressHandler = event => {
+    if (event.keyCode === 13) {
+      setValue(event.target.value);
+      onSearch(value);
+    }
   };
 
   // const keyPressHandler = event => {
@@ -17,17 +25,15 @@ const Search = ({ onSearch }) => {
 
   return (
     <>
-      <div className="input-group mb-3 mt-3">
-        <div className="input-group-prepend">
-          <Button onClick={() => onSearch(value)} component="span" variant="outlined">
-            Search
-          </Button>
-        </div>
+      <div>
+        <Button onClick={() => onSearch(value)} component="span" variant="outlined">
+          Search
+        </Button>
         <TextField
           id="filled-helperText"
           label="Search field"
-          defaultValue="Default Value"
           variant="outlined"
+          onKeyDown={keyPressHandler}
           onChange={valueChangeHandler}
           value={value}
         />
