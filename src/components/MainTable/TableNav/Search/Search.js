@@ -31,7 +31,7 @@ const Search = ({ onSearch }) => {
         </Button>
         <TextField
           id="filled-helperText"
-          label="Search field"
+          label="Search Name,State,City"
           variant="outlined"
           onKeyDown={keyPressHandler}
           onChange={valueChangeHandler}
