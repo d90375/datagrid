@@ -9,44 +9,38 @@ import { makeStyles } from '@material-ui/core/styles';
 import TableHeader from './TableHeader/TableHeader';
 import ControlLabel from './ControlLabel/ControlLabel';
 import TableGrid from './TableGrid/TableGrid';
-import TableToolBar from './TableToolBar/TableToolBar';
-
-// const useStyles = makeStyles({
-//   container: {
-//     borderRadius: '.4rem',
-//     maxHeight: '587px',
-//     // ' &.--hidden ': {
-//     //   height: 0,
-//     //   overflow: 'hidden',
-//     // },
-//   },
-//   paper: {
-//     marginLeft: '2rem',
-//     marginRight: '2rem',
-//     marginTop: '-2rem',
-//     '&.MuiTableContainer-root': {
-//       width: 'auto',
-//     },
-//   },
-// });
+import TableToolBar from '../TableToolBar/TableToolBar';
 
 const useStyles = makeStyles(theme => ({
   root: {
     width: '100%',
   },
   paper: {
-    width: '100%',
     marginBottom: theme.spacing(2),
+    marginLeft: '2rem',
+    marginRight: '2rem',
+    marginTop: '-2rem',
+    '&.MuiTableContainer-root': {
+      width: 'auto',
+    },
   },
   table: {
     minWidth: 750,
+  },
+  container: {
+    borderRadius: '.4rem',
+    maxHeight: '587px',
+    // ' &.--hidden ': {
+    //   height: 0,
+    //   overflow: 'hidden',
+    // },
   },
 }));
 
 const MainTable = ({ columns, rows }) => {
   const classes = useStyles();
   const [order, setOrder] = React.useState('asc');
-  const [orderBy, setOrderBy] = React.useState('calories');
+  const [orderBy, setOrderBy] = React.useState('id');
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);

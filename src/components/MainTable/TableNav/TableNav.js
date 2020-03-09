@@ -2,8 +2,6 @@ import React from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
 
-import Search from './Search/Search';
-
 const useStyles = makeStyles({
   nav: {
     borderTopLeftRadius: '.4rem',
@@ -13,12 +11,13 @@ const useStyles = makeStyles({
   },
 });
 
-const TableNav = ({ onSearch }) => {
+const TableNav = () => {
   const classes = useStyles();
   return (
     <>
-      <div className={classes.nav} />
-      <Search onSearch={onSearch} />
+      <div className={classes.nav}>
+
+      </div>
     </>
   );
 };

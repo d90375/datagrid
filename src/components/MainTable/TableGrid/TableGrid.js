@@ -8,7 +8,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import getComparator from './helpers/getComparator';
 import stableSort from './helpers/stableSort';
 import CheckBoxCell from './CheckBoxCell/CheckBoxCell';
-import cellSwitcher from './helpers/cellSwitcher';
+import CellSwitcher from './CellSwitcher';
+import cellSwitcher from './CellSwitcher';
 
 // const useStyles = makeStyles(theme => ({
 //   root: {
@@ -88,50 +89,13 @@ const TableGrid = ({ rows, columns, order, orderBy, page, rowsPerPage, isSelecte
                 <CheckBoxCell isItemSelected={isItemSelected} />
                 {columns.map((column, index) => {
                   const value = row[column.id];
-
                   return (
-                    <TableCell key={column.id} align={column.align}>
-                      <span className={classes.cell}>{cellSwitcher({ column, value, index })}</span>
+                    <TableCell padding={column.disablePadding ? 'none' : 'default'} key={column.id} align={column.align}>
+                      <span className={classes.cell}>
+                        <CellSwitcher column={column} value={value} index={index} />
+                      </span>
                     </TableCell>
                   );
-
-                  // return (
-                  //   <TableCell key={column.id} align={column.align}>
-                  //     {column.format && typeof value === 'number' ? column.format(value) : value}
-                  //   </TableCell>
-                  // );
-
-                  // if (index === 5) {
-                  //   return (
-                  //     <TableCell key={column.id} align={column.align}>
-                  //       {column.format(value)}
-                  //     </TableCell>
-                  //   );
-                  // } else if (index === 6) {
-                  //   return (
-                  //     <TableCell key={column.id} align={column.align}>
-                  //       {column.format(value)}
-                  //     </TableCell>
-                  //   );
-                  // } else if (index === 7) {
-                  //   return (
-                  //     <TableCell key={column.id} align={column.align}>
-                  //       {value}
-                  //     </TableCell>
-                  //   );
-                  // } else if (index === 8) {
-                  //   return (
-                  //     <TableCell key={column.id} align={column.align}>
-                  //       true
-                  //     </TableCell>
-                  //   );
-                  // } else {
-                  //   return (
-                  //     <TableCell key={column.id} align={column.align}>
-                  //       {value}
-                  //     </TableCell>
-                  //   );
-                  // }
                 })}
               </TableRow>
             );
