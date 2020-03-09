@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 
 import Paper from '@material-ui/core/Paper';
-import data from '../../config/data/hackerData';
+import data from '../config/data/hackerData';
 
-import MainTable from '../MainTable/MainTable';
-import TableNav from '../MainTable/TableNav/TableNav';
-import PreLoader from './PreLoader/PreLoader';
+import MainTable from './MainTable/MainTable';
+import TableNav from './MainTable/TableNav/TableNav';
+import PreLoader from './ui/PreLoader/PreLoader';
 
-import columns from '../../config/column';
+import columns from '../config/column';
 
 // ISO\u00a0Code
 // Size\u00a0(km\u00b2)
@@ -64,7 +64,7 @@ const Main = () => {
 
   return (
     <main>
-      <Paper elevation={4}>
+      <Paper elevation={4} style={{ paddingBottom: '10px' }}>
         <TableNav onSearch={searchHandler} />
         {isLoading ? <MainTable rows={rows} columns={columns} /> : <PreLoader />}
       </Paper>

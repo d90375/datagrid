@@ -2,6 +2,8 @@ import React from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
 
+import ControlLabel from './ControlLabel/ControlLabel';
+
 const useStyles = makeStyles({
   nav: {
     borderTopLeftRadius: '.4rem',
@@ -16,7 +18,7 @@ const TableNav = () => {
   return (
     <>
       <div className={classes.nav}>
-
+        <ControlLabel />
       </div>
     </>
   );

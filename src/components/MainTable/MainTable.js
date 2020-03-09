@@ -1,13 +1,11 @@
 import React from 'react';
 import TableContainer from '@material-ui/core/TableContainer';
-import TablePagination from '@material-ui/core/TablePagination';
 import Table from '@material-ui/core/Table';
 import Paper from '@material-ui/core/Paper';
 
 import { makeStyles } from '@material-ui/core/styles';
 
 import TableHeader from './TableHeader/TableHeader';
-import ControlLabel from './ControlLabel/ControlLabel';
 import TableGrid from './TableGrid/TableGrid';
 import TableToolBar from '../TableToolBar/TableToolBar';
 
@@ -42,9 +40,7 @@ const MainTable = ({ columns, rows }) => {
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('id');
   const [selected, setSelected] = React.useState([]);
-  const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -78,22 +74,13 @@ const MainTable = ({ columns, rows }) => {
     setSelected(newSelected);
   };
 
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = event => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
-
   const handleChangeDense = event => {
     setDense(event.target.checked);
   };
 
   const isSelected = name => selected.indexOf(name) !== -1;
 
-  const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
+  const emptyRows = rows.length;
 
   return (
     <div className={classes.root}>
@@ -121,8 +108,6 @@ const MainTable = ({ columns, rows }) => {
               rows={rows}
               order={order}
               orderBy={orderBy}
-              page={page}
-              rowsPerPage={rowsPerPage}
               isSelected={isSelected}
               handleClick={handleClick}
               dense={dense}
@@ -130,17 +115,8 @@ const MainTable = ({ columns, rows }) => {
             />
           </Table>
         </TableContainer>
-        <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
-          component="div"
-          count={rows.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onChangePage={handleChangePage}
-          onChangeRowsPerPage={handleChangeRowsPerPage}
-        />
       </Paper>
-      <ControlLabel handleChangeDense={handleChangeDense} dense={dense} />
+      {/*<ControlLabel handleChangeDense={handleChangeDense} dense={dense} />*/}
     </div>
   );
 };

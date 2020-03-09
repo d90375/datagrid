@@ -4,7 +4,7 @@ import { Container, CssBaseline } from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/core/styles';
 
 import Header from './components/ui/Header';
-import Main from './components/ui/Main';
+import Main from './components/Main';
 
 import theme from './styles/theme';
 
