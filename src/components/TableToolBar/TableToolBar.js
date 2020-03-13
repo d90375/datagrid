@@ -12,7 +12,7 @@ import PropTypes from 'prop-types';
 import DeleteIcon from '@material-ui/icons/Delete';
 import RemoveFromQueueIcon from '@material-ui/icons/RemoveFromQueue';
 
-import Search from './Search/Search';
+import Search from '../MainTable/TableNav/Search/Search';
 import BooleanTool from './BooleanTool/BooleanTool';
 
 const useToolbarStyles = makeStyles(() => ({
@@ -23,7 +23,7 @@ const useToolbarStyles = makeStyles(() => ({
   },
 }));
 
-const TableToolBar = ({ numSelected, onSearch }) => {
+const TableToolBar = ({ numSelected}) => {
   const classes = useToolbarStyles();
 
   return (
@@ -37,7 +37,7 @@ const TableToolBar = ({ numSelected, onSearch }) => {
           <RemoveFromQueueIcon />
         </IconButton>
       )}
-      <Search onSearch={onSearch} />
+
       <BooleanTool />
     </Toolbar>
   );

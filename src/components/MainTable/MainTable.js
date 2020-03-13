@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import TableContainer from '@material-ui/core/TableContainer';
 import Table from '@material-ui/core/Table';
 import Paper from '@material-ui/core/Paper';
 
 import { makeStyles } from '@material-ui/core/styles';
 
+import PropTypes from 'prop-types';
 import TableHeader from './TableHeader/TableHeader';
 import TableGrid from './TableGrid/TableGrid';
 import TableToolBar from '../TableToolBar/TableToolBar';
@@ -22,9 +23,13 @@ const useStyles = makeStyles(theme => ({
       width: 'auto',
     },
   },
-  table: {
-    minWidth: 750,
-  },
+
+  tableContent: prop => ({
+    overflowY: 'scroll',
+    borderCollapse: 'collapse',
+    display: 'block',
+    height: prop.OldTableHeight > prop.tableHeight ? prop.tableHeight + 2 : prop.OldTableHeight,
+  }),
   container: {
     borderRadius: '.4rem',
     maxHeight: '587px',
@@ -35,12 +40,33 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const MainTable = ({ columns, rows }) => {
-  const classes = useStyles();
-  const [order, setOrder] = React.useState('asc');
-  const [orderBy, setOrderBy] = React.useState('id');
-  const [selected, setSelected] = React.useState([]);
-  const [dense, setDense] = React.useState(false);
+const MainTable = ({ columns, rows, OldRowHeight, OldTableHeight }) => {
+  const [order, setOrder] = useState('asc');
+  const [orderBy, setOrderBy] = useState('id');
+  const [selected, setSelected] = useState([]);
+  const [dense, setDense] = useState(false);
+
+  const [tableHeight] = useState(OldRowHeight * rows.length);
+  const [scroll, setScroll] = useState({
+    top: 0,
+    index: 0,
+    end: Math.ceil((OldTableHeight * 2) / OldRowHeight),
+  });
+  const prop = { tableHeight, OldTableHeight };
+  const classes = useStyles(prop);
+
+  const handleOnScroll = ({ target }) => {
+    const { scrollTop } = target;
+    const rowHeight = OldRowHeight;
+    const index = Math.floor(scrollTop / rowHeight);
+    const padding = Math.ceil((OldRowHeight * 2) / OldRowHeight);
+    console.log('x');
+
+    const t = (scrollTop / rowHeight) * rowHeight;
+    const i = index - padding < 0 ? index : index - padding;
+    const e = index + Math.ceil((OldTableHeight * 2) / rowHeight);
+    setScroll({ ...scroll, top: t, index: i, end: e });
+  };
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -81,14 +107,14 @@ const MainTable = ({ columns, rows }) => {
   const isSelected = name => selected.indexOf(name) !== -1;
 
   const emptyRows = rows.length;
-
   return (
     <div className={classes.root}>
       <Paper elevation={3} className={classes.paper}>
         <TableToolBar emptyRows={emptyRows} numSelected={selected.length} />
         <TableContainer className={classes.container}>
           <Table
-            className={classes.table}
+            onScroll={handleOnScroll}
+            className={classes.tableContent}
             aria-labelledby="tableTitle"
             size={dense ? 'small' : 'medium'}
             stickyHeader
@@ -104,6 +130,10 @@ const MainTable = ({ columns, rows }) => {
               rowCount={rows.length}
             />
             <TableGrid
+              OldTableHeight={OldTableHeight}
+              tableHeight={tableHeight}
+              scroll={scroll}
+              OldRowHeight={OldRowHeight}
               columns={columns}
               rows={rows}
               order={order}
@@ -116,9 +146,21 @@ const MainTable = ({ columns, rows }) => {
           </Table>
         </TableContainer>
       </Paper>
-      {/*<ControlLabel handleChangeDense={handleChangeDense} dense={dense} />*/}
+      {/* <ControlLabel handleChangeDense={handleChangeDense} dense={dense} /> */}
     </div>
   );
+};
+
+MainTable.defaultProps = {
+  OldRowHeight: 35,
+  OldTableHeight: 300,
+};
+
+MainTable.propTypes = {
+  OldRowHeight: PropTypes.number,
+  OldTableHeight: PropTypes.number,
+  rows: PropTypes.arrayOf(PropTypes.object).isRequired,
+  columns: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default MainTable;

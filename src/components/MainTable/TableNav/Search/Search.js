@@ -41,6 +41,10 @@ const useStyles = makeStyles(theme => ({
   margin: {
     marginRight: theme.spacing(1),
   },
+  input: {},
+  icon: {
+    color: '#FFF',
+  },
 }));
 
 const Search = ({ onSearch }) => {
@@ -65,7 +69,7 @@ const Search = ({ onSearch }) => {
         <div className={classes.margin}>
           <Grid container spacing={1} alignItems="flex-end">
             <Grid item>
-              <SearchIcon />
+              <SearchIcon className={classes.icon} />
             </Grid>
             <Grid item>
               <TextField
@@ -79,7 +83,6 @@ const Search = ({ onSearch }) => {
             </Grid>
           </Grid>
         </div>
-
       </div>
     </>
   );

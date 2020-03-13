@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 import TableBody from '@material-ui/core/TableBody';
@@ -63,14 +63,52 @@ const useStyles = makeStyles(theme => ({
     overflow: 'hidden',
     whiteSpace: 'nowrap',
   },
+  tBody: prop => ({
+    position: 'relative',
+    display: 'inline-block',
+    height: prop.tableHeight,
+    maxHeight: prop.tableHeight,
+    width: '100%',
+  }),
 }));
 
-const TableGrid = ({ rows, columns, order, orderBy, isSelected, handleClick, dense, emptyRows }) => {
-  const classes = useStyles();
+const TableGrid = ({ rows, columns, order, orderBy, isSelected, handleClick, dense, emptyRows, OldRowHeight, scroll, tableHeight }) => {
+  const prop = { tableHeight };
+  const classes = useStyles(prop);
+
+  // const generateRows = () => {
+  //   const rowHeight = OldRowHeight;
+  //   let { index } = scroll;
+  //   const items = [];
+  //
+  //   do {
+  //     if (index >= rows.length) {
+  //       index = rows.length;
+  //       break;
+  //     }
+  //
+  //     const rowAttrs = {
+  //       style: {
+  //         position: 'absolute',
+  //         top: index * rowHeight,
+  //         left: 0,
+  //         height: rowHeight,
+  //         lineHeight: `${rowHeight}px`,
+  //       },
+  //       className: `tr ${index % 2 === 0 ? 'tr-odd' : 'tr-even'}`,
+  //     };
+  //     items.push(
+  //
+  //     index = +1;
+  //   } while (index < scroll.end);
+  //
+  //   return items;
+  // };
 
   return (
     <>
-      <TableBody>
+      <TableBody className={classes.tBody}>
+        {/*{generateRows()}*/}
         {stableSort(rows, getComparator(order, orderBy)).map(row => {
           const isItemSelected = isSelected(row.id);
           return (
@@ -97,6 +135,7 @@ const TableGrid = ({ rows, columns, order, orderBy, isSelected, handleClick, den
             </TableRow>
           );
         })}
+
         {emptyRows > 0 && (
           <TableRow style={{ height: (dense ? 33 : 53) * emptyRows }}>
             <TableCell colSpan={6} />
