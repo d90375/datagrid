@@ -28,7 +28,7 @@ const useStyles = makeStyles(theme => ({
     overflowY: 'scroll',
     borderCollapse: 'collapse',
     display: 'block',
-    height: prop.OldTableHeight > prop.tableHeight ? prop.tableHeight + 2 : prop.OldTableHeight,
+    height: prop.OldTableHeight > prop.tableHeight ? prop.tableHeight + 2 : '578px',
   }),
   container: {
     borderRadius: '.4rem',
@@ -40,18 +40,19 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const MainTable = ({ columns, rows, OldRowHeight, OldTableHeight }) => {
+const MainTable = ({ OldRows, rows, OldRowHeight, OldTableHeight, columns }) => {
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState('id');
   const [selected, setSelected] = useState([]);
   const [dense, setDense] = useState(false);
 
-  const [tableHeight] = useState(OldRowHeight * rows.length);
+  const [tableHeight] = useState(OldRowHeight * OldRows.length);
   const [scroll, setScroll] = useState({
     top: 0,
     index: 0,
     end: Math.ceil((OldTableHeight * 2) / OldRowHeight),
   });
+
   const prop = { tableHeight, OldTableHeight };
   const classes = useStyles(prop);
 
@@ -60,12 +61,10 @@ const MainTable = ({ columns, rows, OldRowHeight, OldTableHeight }) => {
     const rowHeight = OldRowHeight;
     const index = Math.floor(scrollTop / rowHeight);
     const padding = Math.ceil((OldRowHeight * 2) / OldRowHeight);
-    console.log('x');
-
-    const t = (scrollTop / rowHeight) * rowHeight;
-    const i = index - padding < 0 ? index : index - padding;
-    const e = index + Math.ceil((OldTableHeight * 2) / rowHeight);
-    setScroll({ ...scroll, top: t, index: i, end: e });
+    const newStateTop = (scrollTop / rowHeight) * rowHeight;
+    const newStateIndex = index - padding < 0 ? index : index - padding;
+    const newStateEnd = index + Math.ceil((OldTableHeight * 2) / rowHeight);
+    setScroll({ ...scroll, top: newStateTop, index: newStateIndex, end: newStateEnd });
   };
 
   const handleRequestSort = (event, property) => {
@@ -134,6 +133,7 @@ const MainTable = ({ columns, rows, OldRowHeight, OldTableHeight }) => {
               tableHeight={tableHeight}
               scroll={scroll}
               OldRowHeight={OldRowHeight}
+              OldRows={OldRows}
               columns={columns}
               rows={rows}
               order={order}
@@ -152,8 +152,8 @@ const MainTable = ({ columns, rows, OldRowHeight, OldTableHeight }) => {
 };
 
 MainTable.defaultProps = {
-  OldRowHeight: 35,
-  OldTableHeight: 300,
+  OldRowHeight: 52,
+  OldTableHeight: 350,
 };
 
 MainTable.propTypes = {

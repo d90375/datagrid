@@ -9,6 +9,17 @@ import PreLoader from './ui/PreLoader/PreLoader';
 
 import columns from '../config/column';
 
+const people = new Array(50000).fill(true).map((val, id) => ({
+  id: id,
+  firstName: Math.random()
+    .toString(20)
+    .substring(8),
+  lastName: Math.random()
+    .toString(20)
+    .substring(8),
+  age: Math.ceil(Math.random() * 80),
+}));
+
 // ISO\u00a0Code
 // Size\u00a0(km\u00b2)
 
@@ -66,7 +77,7 @@ const Main = () => {
     <main>
       <Paper elevation={4} style={{ paddingBottom: '10px' }}>
         <TableNav onSearch={searchHandler} />
-        {isLoading ? <MainTable rows={rows} columns={columns} /> : <PreLoader />}
+        {isLoading ? <MainTable rows={rows} OldRows={rows} columns={columns} /> : <PreLoader />}
       </Paper>
     </main>
   );
