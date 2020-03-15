@@ -1,55 +1,25 @@
 import React, { useState } from 'react';
 import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
-import { fade, makeStyles } from '@material-ui/core/styles';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import SearchIcon from '@material-ui/icons/Search';
-
-// const useStyles = makeStyles(theme => ({
-//   container: {
-//     display: 'flex',
-//   },
-//   input: {
-//     // backgroundColor: theme.palette.common.white,
-//     borderRadius: 4,
-//     position: 'relative',
-//     backgroundColor: theme.palette.common.white,
-//     border: '1px solid #ced4da',
-//     fontSize: 16,
-//     width: '100%',
-//     transition: theme.transitions.create(['border-color', 'box-shadow']),
-//     '&:focus': {
-//       boxShadow: `${fade(theme.palette.primary.main, 0.25)} 0 0 0 0.2rem`,
-//       borderColor: theme.palette.primary.main,
-//     },
-//     '& input:valid + fieldset': {
-//       borderColor: 'white',
-//       borderWidth: 2,
-//     },
-//     '& input:invalid + fieldset': {
-//       borderColor: 'white',
-//       borderWidth: 2,
-//     },
-//     '& input:valid:focus + fieldset': {
-//       borderLeftWidth: 10,
-//       padding: '4px !important', // override inline-style
-//     },
-//   },
-// }));
 
 const useStyles = makeStyles(theme => ({
   margin: {
     marginRight: theme.spacing(1),
   },
-  input: {},
   icon: {
     color: '#FFF',
+  },
+  container: {
+    alignSelf: 'flex-end',
+    marginBottom: '2.5rem',
+    marginLeft: '2rem',
   },
 }));
 
 const Search = ({ onSearch }) => {
   const [value, setValue] = useState('');
-  // const [isLoading, setIsLoading] = useState(false);
   const classes = useStyles();
 
   const valueChangeHandler = event => {
@@ -63,6 +33,31 @@ const Search = ({ onSearch }) => {
     }
   };
 
+  const inputProps = {
+    color: '#FFF',
+  };
+  const SearchTextField = withStyles({
+    root: {
+      '& label.Mui-focused': {
+        color: '#FFF',
+      },
+      '& .MuiInput-underline:after': {
+        borderBottomColor: '#FFF',
+      },
+      '& .MuiFormLabel-root': {
+        color: '#FFF',
+      },
+      '& .MuiOutlinedInput-root': {
+        '& fieldset': {
+          borderColor: '#FFF',
+        },
+        '&.Mui-focused fieldset': {
+          borderColor: '#FFF',
+        },
+      },
+    },
+  })(TextField);
+
   return (
     <>
       <div className={classes.container}>
@@ -72,12 +67,13 @@ const Search = ({ onSearch }) => {
               <SearchIcon className={classes.icon} />
             </Grid>
             <Grid item>
-              <TextField
+              <SearchTextField
                 className={classes.input}
                 id="filled-helperText"
                 label="Search Name,State,City"
                 onKeyDown={keyPressHandler}
                 onChange={valueChangeHandler}
+                inputProps={inputProps}
                 value={value}
               />
             </Grid>

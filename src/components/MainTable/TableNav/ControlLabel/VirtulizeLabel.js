@@ -13,11 +13,7 @@ const VirtualizeLabel = () => {
   const classes = useStyles();
   return (
     <>
-      <FormControlLabel
-        className={classes.control}
-        control={<Switch  color="primary" />}
-        label="Virtualize"
-      />
+      <FormControlLabel className={classes.control} control={<Switch color="primary" />} label="Virtualize" />
     </>
   );
 };

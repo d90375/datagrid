@@ -39,6 +39,7 @@ const MainTable = ({ rows, columns, rowHeight, tableHeight }) => {
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState('id');
   const [styledTableHeight] = useState(rowHeight * rows.length);
+  tableHeight = true ? 350 : styledTableHeight;
   const [scroll, setScroll] = useState({
     top: 0,
     index: 0,
@@ -103,12 +104,11 @@ const MainTable = ({ rows, columns, rowHeight, tableHeight }) => {
 
 MainTable.defaultProps = {
   rowHeight: 52,
-  tableHeight: 350,
 };
 
 MainTable.propTypes = {
   rowHeight: PropTypes.number,
-  tableHeight: PropTypes.number,
+  tableHeight: PropTypes.number.isRequired,
   rows: PropTypes.arrayOf(PropTypes.object).isRequired,
   columns: PropTypes.arrayOf(PropTypes.object).isRequired,
 };

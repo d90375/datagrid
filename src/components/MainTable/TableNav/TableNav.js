@@ -7,6 +7,8 @@ import Search from './Search/Search';
 
 const useStyles = makeStyles({
   nav: {
+    display: 'flex',
+    justifyContent: 'space-between',
     borderTopLeftRadius: '.4rem',
     borderTopRightRadius: '.4rem',
     height: '150px',
@@ -19,7 +21,7 @@ const TableNav = ({ onSearch }) => {
   return (
     <>
       <div className={classes.nav}>
-        <Search  onSearch={onSearch} />
+        <Search onSearch={onSearch} />
         <ControlLabel />
       </div>
     </>
