@@ -7,6 +7,8 @@ import TableSortLabel from '@material-ui/core/TableSortLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 
 import { makeStyles } from '@material-ui/core/styles';
+import { useDispatch, useSelector } from 'react-redux';
+import { setAllRowSelected } from '../../../store/actions/select';
 import HeaderButton from './HeaderButton/HeaderButton';
 
 // const StyledTableCell = withStyles((theme: Theme) =>
@@ -33,8 +35,13 @@ const useStyles = makeStyles({
   },
 });
 
-const TableHeader = ({ columns, onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort }) => {
+const TableHeader = ({ rows, columns, order, orderBy, onRequestSort, rowCount }) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const selected = useSelector(state => state.selectReducer);
+  const handleSelectAllClick = event => {
+    dispatch(setAllRowSelected(event, rows));
+  };
 
   const createSortHandler = property => event => {
     onRequestSort(event, property);
@@ -46,16 +53,15 @@ const TableHeader = ({ columns, onSelectAllClick, order, orderBy, numSelected, r
         <TableRow>
           <TableCell padding="checkbox">
             <Checkbox
-              indeterminate={numSelected > 0 && numSelected < rowCount}
-              checked={rowCount > 0 && numSelected === rowCount}
-              onChange={onSelectAllClick}
+              indeterminate={selected.length > 0 && selected.length < rowCount}
+              checked={rowCount > 0 && selected.length === rowCount}
+              onChange={handleSelectAllClick}
               inputProps={{ 'aria-label': 'select all desserts' }}
             />
           </TableCell>
           {columns.map(column => (
             <>
               <TableCell
-                key={column.id}
                 padding={column.disablePadding ? 'none' : 'default'}
                 sortDirection={orderBy === column.id ? order : false}
                 align={column.align}
@@ -67,7 +73,6 @@ const TableHeader = ({ columns, onSelectAllClick, order, orderBy, numSelected, r
                   onClick={createSortHandler(column.id)}
                 >
                   {column.label}
-
                   <span className={classes.visuallyHidden}>{order === 'desc' ? 'sorted descending' : 'sorted ascending'}</span>
                 </TableSortLabel>
               </TableCell>
@@ -82,26 +87,8 @@ const TableHeader = ({ columns, onSelectAllClick, order, orderBy, numSelected, r
 export default TableHeader;
 
 TableHeader.propTypes = {
-  numSelected: PropTypes.number.isRequired,
   onRequestSort: PropTypes.func.isRequired,
-  onSelectAllClick: PropTypes.func.isRequired,
   order: PropTypes.oneOf(['asc', 'desc']).isRequired,
   orderBy: PropTypes.string.isRequired,
   rowCount: PropTypes.number.isRequired,
 };
-
-{
-  /*{columns.map(column => (*/
-}
-{
-  /*  <StyledTableCell key={column.id} align={column.align} style={{ minWidth: column.minWidth }}>*/
-}
-{
-  /*    {column.label}*/
-}
-{
-  /*  </StyledTableCell>*/
-}
-{
-  /*))}*/
-}

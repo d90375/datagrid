@@ -1,0 +1,2 @@
+export const SELECT_ITEM = 'SELECT_ITEM';
+export const SELECT_ALL_ITEMS = 'SELECT_ALL_ITEMS';

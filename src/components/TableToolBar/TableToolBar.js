@@ -1,18 +1,12 @@
 import React from 'react';
-import clsx from 'clsx';
 import Toolbar from '@material-ui/core/Toolbar';
-import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
 
-import { makeStyles, lighten } from '@material-ui/core/styles';
-
-import PropTypes from 'prop-types';
-
+import { makeStyles } from '@material-ui/core/styles';
 import DeleteIcon from '@material-ui/icons/Delete';
 import RemoveFromQueueIcon from '@material-ui/icons/RemoveFromQueue';
 
-import Search from '../MainTable/TableNav/Search/Search';
+import { useSelector } from 'react-redux';
 import BooleanTool from './BooleanTool/BooleanTool';
 
 const useToolbarStyles = makeStyles(() => ({
@@ -23,12 +17,13 @@ const useToolbarStyles = makeStyles(() => ({
   },
 }));
 
-const TableToolBar = ({ numSelected}) => {
+const TableToolBar = () => {
   const classes = useToolbarStyles();
+  const selected = useSelector(state => state.selectReducer);
 
   return (
     <Toolbar className={classes.root}>
-      {numSelected > 0 ? (
+      {selected.length > 0 ? (
         <IconButton aria-label="delete">
           <DeleteIcon />
         </IconButton>
@@ -37,14 +32,9 @@ const TableToolBar = ({ numSelected}) => {
           <RemoveFromQueueIcon />
         </IconButton>
       )}
-
       <BooleanTool />
     </Toolbar>
   );
-};
-
-TableToolBar.propTypes = {
-  numSelected: PropTypes.number.isRequired,
 };
 
 export default TableToolBar;
