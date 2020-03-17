@@ -12,6 +12,16 @@ import CheckBoxCell from './CheckBoxCell/CheckBoxCell';
 import CellSwitcher from './CellSwitcher';
 import { setRowSelected } from '../../../store/actions/select';
 
+// const StyledTableRow = withStyles((theme: Theme) =>
+//     createStyles({
+//       root: {
+//         '&:nth-of-type(odd)': {
+//           backgroundColor: theme.palette.background.default,
+//         },
+//       },
+//     }),
+// )(TableRow);]
+
 const useStyles = makeStyles(() => ({
   cell: {
     display: 'block',
@@ -79,7 +89,7 @@ const TableGrid = ({ rows, columns, order, orderBy, scroll, rowHeight, styledTab
           {columns.map((column, i) => {
             const value = newRows[index][column.id];
             return (
-              <TableCell padding={column.disablePadding ? 'none' : 'default'} key={column.id} align={column.align}>
+              <TableCell padding={column.disablePadding ? 'none' : 'default'} style={{ minWidth: column.width }} key={column.id} align={column.align}>
                 <span className={classes.cell}>
                   <CellSwitcher column={column} value={value} index={i} />
                 </span>

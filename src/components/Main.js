@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import Paper from '@material-ui/core/Paper';
+import { useSelector } from 'react-redux';
 import data from '../config/data/hackerData';
 
 import MainTable from './MainTable/MainTable';
@@ -9,39 +10,10 @@ import PreLoader from './ui/PreLoader/PreLoader';
 
 import columns from '../config/column';
 
-const people = new Array(50000).fill(true).map((val, id) => ({
-  id: id,
-  firstName: Math.random()
-    .toString(20)
-    .substring(8),
-  lastName: Math.random()
-    .toString(20)
-    .substring(8),
-  age: Math.ceil(Math.random() * 80),
-}));
-
-// ISO\u00a0Code
-// Size\u00a0(km\u00b2)
-
-//
-// const StyledTableRow = withStyles((theme: Theme) =>
-//     createStyles({
-//       root: {
-//         '&:nth-of-type(odd)': {
-//           backgroundColor: theme.palette.background.default,
-//         },
-//       },
-//     }),
-// )(TableRow);]
-
 const Main = () => {
   const [rows, setRows] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [search, setSearch] = useState('');
-
-  const searchHandler = inputSearch => {
-    setSearch(inputSearch);
-  };
+  const search = useSelector(state => state.searchReducer);
 
   useEffect(() => {
     (async function load() {
@@ -75,8 +47,9 @@ const Main = () => {
 
   return (
     <main>
+      <Test />
       <Paper elevation={4} style={{ paddingBottom: '10px' }}>
-        <TableNav onSearch={searchHandler} />
+        <TableNav />
         {isLoading ? <MainTable rows={rows} OldRows={rows} columns={columns} /> : <PreLoader />}
       </Paper>
     </main>
@@ -84,3 +57,23 @@ const Main = () => {
 };
 
 export default Main;
+
+const Test = () => {
+  const dataUsers = [
+    { login: 'Yauheni', time: '12:00' },
+    { login: 'Alexandr', time: '13:00' },
+    { login: 'Yauheni', time: '14:00' },
+  ];
+
+  const enterData = {};
+
+  dataUsers.forEach(e => {
+    if (!enterData[e.login]) {
+      enterData[e.login] = 0;
+    }
+
+    enterData[e.login] += 1;
+  });
+
+  return <div></div>;
+};

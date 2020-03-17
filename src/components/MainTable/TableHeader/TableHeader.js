@@ -62,6 +62,7 @@ const TableHeader = ({ rows, columns, order, orderBy, onRequestSort, rowCount })
           {columns.map(column => (
             <>
               <TableCell
+                style={{ minWidth: column.width }}
                 padding={column.disablePadding ? 'none' : 'default'}
                 sortDirection={orderBy === column.id ? order : false}
                 align={column.align}

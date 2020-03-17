@@ -2,8 +2,8 @@ import React from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
 
-import ControlLabel from './ControlLabel/ControlLabel';
 import Search from './Search/Search';
+import VirtualizeLabel from './ControlLabel/VirtulizeLabel';
 
 const useStyles = makeStyles({
   nav: {
@@ -16,13 +16,13 @@ const useStyles = makeStyles({
   },
 });
 
-const TableNav = ({ onSearch }) => {
+const TableNav = () => {
   const classes = useStyles();
   return (
     <>
       <div className={classes.nav}>
-        <Search onSearch={onSearch} />
-        <ControlLabel />
+        <Search />
+        <VirtualizeLabel />
       </div>
     </>
   );

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import TableContainer from '@material-ui/core/TableContainer';
 import Table from '@material-ui/core/Table';
 import Paper from '@material-ui/core/Paper';
@@ -6,6 +6,7 @@ import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
 
 import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 import TableHeader from './TableHeader/TableHeader';
 import TableGrid from './TableGrid/TableGrid';
 import TableToolBar from '../TableToolBar/TableToolBar';
@@ -35,16 +36,21 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const MainTable = ({ rows, columns, rowHeight, tableHeight }) => {
+const MainTable = ({ rows, columns, rowHeight }) => {
+  const virt = useSelector(state => state.switchReducer);
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState('id');
   const [styledTableHeight] = useState(rowHeight * rows.length);
-  tableHeight = true ? 350 : styledTableHeight;
+  const [tableHeight, setTableHeight] = useState(350);
   const [scroll, setScroll] = useState({
     top: 0,
     index: 0,
     end: Math.ceil((tableHeight * 2) / rowHeight),
   });
+
+  useEffect(() => {
+    setTableHeight(virt ? 350 : styledTableHeight);
+  }, [styledTableHeight, virt]);
 
   const prop = { styledTableHeight, tableHeight };
   const classes = useStyles(prop);
@@ -108,7 +114,6 @@ MainTable.defaultProps = {
 
 MainTable.propTypes = {
   rowHeight: PropTypes.number,
-  tableHeight: PropTypes.number.isRequired,
   rows: PropTypes.arrayOf(PropTypes.object).isRequired,
   columns: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
