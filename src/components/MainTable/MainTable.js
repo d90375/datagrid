@@ -37,7 +37,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const MainTable = ({ rows, columns, rowHeight }) => {
-  const virt = useSelector(state => state.switchReducer);
+  const isVirt = useSelector(state => state.switchVirtReducer.isVirt);
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState('id');
   const [styledTableHeight] = useState(rowHeight * rows.length);
@@ -49,8 +49,8 @@ const MainTable = ({ rows, columns, rowHeight }) => {
   });
 
   useEffect(() => {
-    setTableHeight(virt ? 350 : styledTableHeight);
-  }, [styledTableHeight, virt]);
+    setTableHeight(isVirt ? 350 : styledTableHeight);
+  }, [styledTableHeight, isVirt]);
 
   const prop = { styledTableHeight, tableHeight };
   const classes = useStyles(prop);

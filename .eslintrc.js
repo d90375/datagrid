@@ -34,7 +34,6 @@ module.exports = {
     sourceType: 'module', // Allows for the use of imports
   },
   rules: {
-    'react/prop-types': 'off', // Disable prop-types as we use TypeScript for type checking
     'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }],
     'import/extensions': [
       'error',

@@ -1,10 +1,12 @@
 import { combineReducers } from 'redux';
 import selectReducer from './reducers/select';
-import switchReducer from './reducers/switch';
+import switchVirtReducer from './reducers/switchVirtReducer ';
 import searchReducer from './reducers/data';
 
-export default combineReducers({
+const rootReducer = combineReducers({
   selectReducer,
-  switchReducer,
+  switchVirtReducer,
   searchReducer,
 });
+
+export default rootReducer;

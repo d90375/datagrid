@@ -9,7 +9,6 @@ import Checkbox from '@material-ui/core/Checkbox';
 import { makeStyles } from '@material-ui/core/styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { setAllRowSelected } from '../../../store/actions/select';
-import HeaderButton from './HeaderButton/HeaderButton';
 
 // const StyledTableCell = withStyles((theme: Theme) =>
 //   createStyles({
@@ -67,7 +66,6 @@ const TableHeader = ({ rows, columns, order, orderBy, onRequestSort, rowCount })
                 sortDirection={orderBy === column.id ? order : false}
                 align={column.align}
               >
-                <HeaderButton />
                 <TableSortLabel
                   active={orderBy === column.id}
                   direction={orderBy === column.id ? order : 'asc'}
