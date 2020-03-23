@@ -7,6 +7,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import RemoveFromQueueIcon from '@material-ui/icons/RemoveFromQueue';
 
 import { useSelector } from 'react-redux';
+import Proptypes from 'prop-types';
 import BooleanTool from './BooleanTool/BooleanTool';
 
 const useToolbarStyles = makeStyles(() => ({
@@ -17,14 +18,14 @@ const useToolbarStyles = makeStyles(() => ({
   },
 }));
 
-const TableToolBar = () => {
+const TableToolBar = ({ onDelete }) => {
   const classes = useToolbarStyles();
   const selected = useSelector(state => state.selectReducer);
 
   return (
     <Toolbar className={classes.root}>
       {selected.length > 0 ? (
-        <IconButton aria-label="delete">
+        <IconButton aria-label="delete" onClick={onDelete}>
           <DeleteIcon />
         </IconButton>
       ) : (
@@ -38,3 +39,7 @@ const TableToolBar = () => {
 };
 
 export default TableToolBar;
+
+TableToolBar.propTypes = {
+  onDelete: Proptypes.func.isRequired,
+};

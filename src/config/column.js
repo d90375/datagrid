@@ -4,7 +4,7 @@ const columns = [
   {
     id: 'lastName',
     label: 'Last name',
-    width: 100,
+    width: 150,
     align: 'left',
   },
   {

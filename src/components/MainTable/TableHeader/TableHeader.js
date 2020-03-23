@@ -7,18 +7,6 @@ import TableSortLabel from '@material-ui/core/TableSortLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 
 import { makeStyles } from '@material-ui/core/styles';
-import { useDispatch, useSelector } from 'react-redux';
-import { setAllRowSelected } from '../../../store/actions/select';
-
-// const StyledTableCell = withStyles((theme: Theme) =>
-//   createStyles({
-//     head: {
-//       backgroundColor: theme.palette.common.black,
-//       color: theme.palette.common.white,
-//       fontSize: '1.3em',
-//     },
-//   })
-// )(TableCell);
 
 const useStyles = makeStyles({
   visuallyHidden: {
@@ -34,17 +22,8 @@ const useStyles = makeStyles({
   },
 });
 
-const TableHeader = ({ rows, columns, order, orderBy, onRequestSort, rowCount }) => {
+const TableHeader = ({ columns, selected, order, orderBy, onCreateSort, onSelectAllClick, rowCount }) => {
   const classes = useStyles();
-  const dispatch = useDispatch();
-  const selected = useSelector(state => state.selectReducer);
-  const handleSelectAllClick = event => {
-    dispatch(setAllRowSelected(event, rows));
-  };
-
-  const createSortHandler = property => event => {
-    onRequestSort(event, property);
-  };
 
   return (
     <>
@@ -54,7 +33,7 @@ const TableHeader = ({ rows, columns, order, orderBy, onRequestSort, rowCount })
             <Checkbox
               indeterminate={selected.length > 0 && selected.length < rowCount}
               checked={rowCount > 0 && selected.length === rowCount}
-              onChange={handleSelectAllClick}
+              onChange={onSelectAllClick}
               inputProps={{ 'aria-label': 'select all desserts' }}
             />
           </TableCell>
@@ -69,7 +48,7 @@ const TableHeader = ({ rows, columns, order, orderBy, onRequestSort, rowCount })
                 <TableSortLabel
                   active={orderBy === column.id}
                   direction={orderBy === column.id ? order : 'asc'}
-                  onClick={createSortHandler(column.id)}
+                  onClick={onCreateSort(column.id)}
                 >
                   {column.label}
                   <span className={classes.visuallyHidden}>{order === 'desc' ? 'sorted descending' : 'sorted ascending'}</span>
@@ -86,8 +65,13 @@ const TableHeader = ({ rows, columns, order, orderBy, onRequestSort, rowCount })
 export default TableHeader;
 
 TableHeader.propTypes = {
-  onRequestSort: PropTypes.func.isRequired,
+  onCreateSort: PropTypes.func.isRequired,
+  onSelectAllClick: PropTypes.func.isRequired,
   order: PropTypes.oneOf(['asc', 'desc']).isRequired,
   orderBy: PropTypes.string.isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
+  columns: PropTypes.array.isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
+  selected: PropTypes.array.isRequired,
   rowCount: PropTypes.number.isRequired,
 };

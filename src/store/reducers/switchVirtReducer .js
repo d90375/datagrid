@@ -4,7 +4,7 @@ import { SWITCH_VIRTUALIZATION } from '../actionTypes';
 const DATA = load({ namespace: 'grid' });
 let virtualized = DATA.switchVirtReducer;
 
-if (!virtualized || virtualized.isVirt === undefined) {
+if (!virtualized) {
   virtualized = {
     isVirt: true,
   };

@@ -11000,4 +11000,5 @@ const data = [
     status: true,
   },
 ];
+
 export default data;

@@ -3,7 +3,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import { makeStyles } from '@material-ui/core/styles';
 import { useDispatch, useSelector } from 'react-redux';
-import { setVirt } from '../../../../store/actions/switchVirtAction';
+import { setVirt } from '../../../store/actions/switchVirtAction';
 
 const useStyles = makeStyles({
   control: {

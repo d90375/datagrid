@@ -1,18 +1,3 @@
-import React from 'react';
-import FormControl from '@material-ui/core/FormControl';
-import FormLabel from '@material-ui/core/FormLabel';
-import FormGroup from '@material-ui/core/FormGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/core/styles';
-
-const useStyles = makeStyles(() => ({
-  formControl: {},
-}));
-
-const ColumnVis = ({ columns: { isEmailOn, isChangeDateOn, isScoreOn, isSizeOn, isMarriedOn, handleChange } }) => {
-  const classes = useStyles();
 
 
 // return (

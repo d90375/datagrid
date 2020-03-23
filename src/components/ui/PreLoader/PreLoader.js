@@ -12,9 +12,9 @@ const SVGIcon = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     xmlnsXlink="http://www.w3.org/1999/xlink"
-    style={{ margin: 'auto', background: 'rgb(247, 246, 249)', display: 'block', shapeRendering: 'auto' }}
+    style={{ margin: 'auto', background: '#FFF', display: 'block', shapeRendering: 'auto' }}
     width="100%"
-    height="600px"
+    height="625px"
     viewBox="0 0 100 100"
     preserveAspectRatio="xMidYMid"
   >

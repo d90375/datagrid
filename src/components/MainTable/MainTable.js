@@ -6,7 +6,6 @@ import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
 
 import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
 import TableHeader from './TableHeader/TableHeader';
 import TableGrid from './TableGrid/TableGrid';
 import TableToolBar from '../TableToolBar/TableToolBar';
@@ -36,10 +35,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const MainTable = ({ rows, columns, rowHeight }) => {
-  const isVirt = useSelector(state => state.switchVirtReducer.isVirt);
-  const [order, setOrder] = useState('asc');
-  const [orderBy, setOrderBy] = useState('id');
+const MainTable = ({ rows, columns, rowHeight, isVirt, order, orderBy, onCreateSort, onSelectAllClick, selected, onDelete }) => {
   const [styledTableHeight] = useState(rowHeight * rows.length);
   const [tableHeight, setTableHeight] = useState(350);
   const [scroll, setScroll] = useState({
@@ -48,12 +44,12 @@ const MainTable = ({ rows, columns, rowHeight }) => {
     end: Math.ceil((tableHeight * 2) / rowHeight),
   });
 
+  const prop = { styledTableHeight, tableHeight };
+  const classes = useStyles(prop);
+
   useEffect(() => {
     setTableHeight(isVirt ? 350 : styledTableHeight);
   }, [styledTableHeight, isVirt]);
-
-  const prop = { styledTableHeight, tableHeight };
-  const classes = useStyles(prop);
 
   const handleOnScroll = ({ target }) => {
     const { scrollTop } = target;
@@ -66,16 +62,10 @@ const MainTable = ({ rows, columns, rowHeight }) => {
     setScroll({ ...scroll, top: newStateTop, index: newStateIndex, end: newStateEnd });
   };
 
-  const handleRequestSort = (event, property) => {
-    const isAsc = orderBy === property && order === 'asc';
-    setOrder(isAsc ? 'desc' : 'asc');
-    setOrderBy(property);
-  };
-
   return (
     <div className={classes.root}>
       <Paper elevation={3} className={classes.paper}>
-        <TableToolBar />
+        <TableToolBar onDelete={onDelete} />
         <TableContainer className={classes.container}>
           <Table
             onScroll={handleOnScroll}
@@ -85,14 +75,16 @@ const MainTable = ({ rows, columns, rowHeight }) => {
             aria-label="data grid"
           >
             <TableHeader
-              rows={rows}
+              selected={selected}
               columns={columns}
               order={order}
               orderBy={orderBy}
-              onRequestSort={handleRequestSort}
+              onSelectAllClick={onSelectAllClick}
+              onCreateSort={onCreateSort}
               rowCount={rows.length}
             />
             <TableGrid
+              selected={selected}
               rows={rows}
               columns={columns}
               order={order}
@@ -114,7 +106,31 @@ MainTable.defaultProps = {
 
 MainTable.propTypes = {
   rowHeight: PropTypes.number,
-  rows: PropTypes.arrayOf(PropTypes.object).isRequired,
+  isVirt: PropTypes.bool.isRequired,
+  order: PropTypes.string.isRequired,
+  orderBy: PropTypes.string.isRequired,
+  onCreateSort: PropTypes.func.isRequired,
+  onSelectAllClick: PropTypes.func.isRequired,
+  rows: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number,
+      firstName: PropTypes.string,
+      lastName: PropTypes.string,
+      address: PropTypes.arrayOf(
+        PropTypes.shape({
+          state: PropTypes.string,
+          city: PropTypes.string,
+        })
+      ),
+      ageCategory: PropTypes.number,
+      salary: PropTypes.number,
+      distance: PropTypes.number,
+      hackedDate: PropTypes.string,
+      status: PropTypes.bool,
+    })
+  ).isRequired,
+  onDelete: PropTypes.func.isRequired,
+  selected: PropTypes.arrayOf(PropTypes.object).isRequired,
   columns: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 

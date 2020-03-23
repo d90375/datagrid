@@ -6,11 +6,11 @@ import TableBody from '@material-ui/core/TableBody';
 import { useDispatch, useSelector } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 
-import getComparator from './helpers/getComparator';
-import stableSort from './helpers/stableSort';
+import getComparator from '../../../utils/getComparator';
+import stableSort from '../../../utils/stableSort';
 import CheckBoxCell from './CheckBoxCell/CheckBoxCell';
 import CellSwitcher from './CellSwitcher';
-import { setRowSelected } from '../../../store/actions/select';
+import { setRowSelected } from '../../../store/actions/selectAction';
 
 // const StyledTableRow = withStyles((theme: Theme) =>
 //     createStyles({
@@ -39,13 +39,11 @@ const useStyles = makeStyles(() => ({
   }),
 }));
 
-const TableGrid = ({ rows, columns, order, orderBy, scroll, rowHeight, styledTableHeight }) => {
+const TableGrid = ({ rows, columns, order, orderBy, scroll, rowHeight, styledTableHeight,selected }) => {
   const styledProp = { styledTableHeight };
   const classes = useStyles(styledProp);
-  const dispatch = useDispatch();
-
-  const array = useSelector(state => state.selectReducer);
-  const isSelected = name => array.indexOf(name) !== -1;
+  const dispatch = useDispatch()
+  const isSelected = name => selected.indexOf(name) !== -1;
 
   const sortedRow = stableSort(rows, getComparator(order, orderBy));
 
