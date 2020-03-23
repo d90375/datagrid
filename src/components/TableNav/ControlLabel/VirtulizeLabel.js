@@ -8,7 +8,6 @@ import { setVirt } from '../../../store/actions/switchVirtAction';
 const useStyles = makeStyles({
   control: {
     color: '#FFF',
-    alignSelf: 'flex-start',
     marginRight: '1rem',
     marginTop: '.5rem',
   },

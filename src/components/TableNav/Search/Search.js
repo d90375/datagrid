@@ -4,6 +4,7 @@ import { makeStyles, withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import SearchIcon from '@material-ui/icons/Search';
 import { useDispatch, useSelector } from 'react-redux';
+import PropTypes from 'prop-types';
 import { setSearch } from '../../../store/actions/dataAction';
 
 const useStyles = makeStyles(theme => ({
@@ -14,8 +15,6 @@ const useStyles = makeStyles(theme => ({
     color: '#FFF',
   },
   container: {
-    alignSelf: 'flex-end',
-    marginBottom: '2.5rem',
     marginLeft: '2rem',
   },
 }));
@@ -45,9 +44,14 @@ const SearchTextField = withStyles({
   },
 })(TextField);
 
-function InputTextField({ handleValueChanged, value }) {
+const InputTextField = ({ handleValueChanged, value }) => {
   return <SearchTextField fullWidth id="filled-helperText" label="Search Name,State,City" onChange={handleValueChanged} value={value} />;
-}
+};
+
+InputTextField.propTypes = {
+  handleValueChanged: PropTypes.func.isRequired,
+  value: PropTypes.string.isRequired,
+};
 
 const Search = () => {
   const classes = useStyles();
