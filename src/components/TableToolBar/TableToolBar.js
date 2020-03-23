@@ -9,6 +9,7 @@ import RemoveFromQueueIcon from '@material-ui/icons/RemoveFromQueue';
 import { useSelector } from 'react-redux';
 import Proptypes from 'prop-types';
 import BooleanTool from './BooleanTool/BooleanTool';
+import ColumnVis from './ClumnVis/ColumnVis';
 
 const useToolbarStyles = makeStyles(() => ({
   root: {
@@ -33,6 +34,7 @@ const TableToolBar = ({ onDelete }) => {
           <RemoveFromQueueIcon />
         </IconButton>
       )}
+      <ColumnVis />
       <BooleanTool />
     </Toolbar>
   );
