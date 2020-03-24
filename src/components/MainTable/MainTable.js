@@ -10,6 +10,8 @@ import TableHeader from './TableHeader/TableHeader';
 import TableGrid from './TableGrid/TableGrid';
 import TableToolBar from '../TableToolBar/TableToolBar';
 
+import { VIRT_ROW_COUNT } from '../../constants';
+
 const useStyles = makeStyles(theme => ({
   root: {
     width: '100%',
@@ -36,8 +38,8 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const MainTable = ({ rows, columns, rowHeight, isVirt, order, orderBy, onCreateSort, onSelectAllClick, selected, onDelete }) => {
-  const [styledTableHeight] = useState(rowHeight * rows.length);
-  const [tableHeight, setTableHeight] = useState(350);
+  const [styledTableHeight, setStyledTableHeight] = useState(rowHeight * rows.length);
+  const [tableHeight, setTableHeight] = useState(rowHeight * VIRT_ROW_COUNT);
   const [scroll, setScroll] = useState({
     top: 0,
     index: 0,
@@ -48,8 +50,9 @@ const MainTable = ({ rows, columns, rowHeight, isVirt, order, orderBy, onCreateS
   const classes = useStyles(prop);
 
   useEffect(() => {
-    setTableHeight(isVirt ? 350 : styledTableHeight);
-  }, [styledTableHeight, isVirt]);
+    setStyledTableHeight(rowHeight * rows.length);
+    setTableHeight(isVirt ? rowHeight * VIRT_ROW_COUNT : styledTableHeight);
+  }, [rowHeight, rows.length, styledTableHeight, isVirt]);
 
   const handleOnScroll = ({ target }) => {
     const { scrollTop } = target;

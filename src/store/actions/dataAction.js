@@ -1,4 +1,4 @@
-import { DELETE_ITEM, LOAD_DATA_SUCCESS, LOAD_PRELOADER, SET_SEARCH } from '../actionTypes';
+import { DELETE_ITEM, LOAD_DATA_SUCCESS, LOAD_PRELOADER, SET_SEARCH, SWITCH_FILTER } from '../actionTypes';
 import data from '../../config/data/hackerData';
 
 export const setSearch = searchValue => ({
@@ -9,6 +9,11 @@ export const setSearch = searchValue => ({
 export const delItem = selected => ({
   type: DELETE_ITEM,
   selected,
+});
+
+export const setEnumList = value => ({
+  type: SWITCH_FILTER,
+  value,
 });
 
 export const loadData = () => dispatch => {

@@ -1,4 +1,4 @@
-import { SET_SEARCH, LOAD_PRELOADER, LOAD_DATA_SUCCESS, LOAD_DATA_ERROR, DELETE_ITEM } from '../actionTypes';
+import { SET_SEARCH, LOAD_PRELOADER, LOAD_DATA_SUCCESS, LOAD_DATA_ERROR, DELETE_ITEM, SWITCH_FILTER } from '../actionTypes';
 
 const initialState = {
   staticData: [],
@@ -6,6 +6,7 @@ const initialState = {
   isLoading: true,
   error: '',
   searchValue: '',
+  selectedEnumList: [],
 };
 
 const dataReducer = (state = initialState, action) => {
@@ -45,11 +46,22 @@ const dataReducer = (state = initialState, action) => {
         const result = state.data.filter(
           item =>
             item.firstName.toLowerCase().includes(action.searchValue.toLowerCase()) ||
-            item.lastName.toLowerCase().includes(action.searchValue.toLowerCase())
+            item.lastName.toLowerCase().includes(action.searchValue.toLowerCase()) ||
+            item.address[0].city.toLowerCase().includes(action.searchValue.toLowerCase()) ||
+            item.address[0].state.toLowerCase().includes(action.searchValue.toLowerCase())
         );
         return { ...state, data: result, searchValue: action.searchValue };
       }
       return { ...state, data: state.staticData, searchValue: action.searchValue };
+    case SWITCH_FILTER:
+      state.selectedEnumList = action.value;
+      if (state.selectedEnumList.length > 0) {
+        console.log(state.selectedEnumList)
+        const result = state.data.filter(item => state.selectedEnumList.some(el => el === item.ageCategory));
+        console.log(result);
+        return { ...state, data: result };
+      }
+      return { ...state, data: state.staticData };
 
     default:
       return state;
@@ -57,3 +69,10 @@ const dataReducer = (state = initialState, action) => {
 };
 
 export default dataReducer;
+
+// const result = action.selectedEnumList.map(selectedItem => {
+//   console.log(selectedItem)
+//   return state.data.filter(item => {
+//     return item.ageCategory.includes(selectedItem);
+//   });
+// });

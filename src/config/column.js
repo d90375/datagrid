@@ -1,6 +1,6 @@
 const columns = [
   { id: 'id', label: 'Id', disablePadding: true, width: 50, align: 'left' },
-  { id: 'firstName', label: 'First name', width: 100, align: 'left' },
+  { id: 'firstName', label: 'First name', width: 130, align: 'left' },
   {
     id: 'lastName',
     label: 'Last name',

@@ -46,7 +46,7 @@ module.exports = {
       },
     ],
     'no-param-reassign': 0,
-    'no-loop-func': 0,
+    'no-loop-func': 1,
     'react/jsx-curly-newline': 'off', // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-curly-newline.md
     'no-underscore-dangle': [0],
     'react/jsx-wrap-multilines': [0],

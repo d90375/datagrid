@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 import TableBody from '@material-ui/core/TableBody';
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch} from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 
 import getComparator from '../../../utils/getComparator';
@@ -50,6 +50,7 @@ const TableGrid = ({ rows, columns, order, orderBy, scroll, rowHeight, styledTab
   const generateRows = () => {
     const styledRowHeight = rowHeight;
     const newRows = sortedRow;
+    // eslint-disable-next-line react/prop-types
     let { index } = scroll;
     const items = [];
 

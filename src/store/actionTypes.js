@@ -6,3 +6,4 @@ export const LOAD_PRELOADER = 'LOAD_PRELOADER';
 export const LOAD_DATA_SUCCESS = 'LOAD_DATA_SUCCESS';
 export const LOAD_DATA_ERROR = 'LOAD_DATA_ERROR';
 export const DELETE_ITEM = 'DELETE_ITEM';
+export const SWITCH_FILTER = 'SWITCH_FILTER';

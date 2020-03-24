@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
@@ -9,8 +9,10 @@ import Grid from '@material-ui/core/Grid';
 import Input from '@material-ui/core/Input';
 import Checkbox from '@material-ui/core/Checkbox';
 import ListItemText from '@material-ui/core/ListItemText';
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
 import { ageCategory } from '../../../constants';
+import { setEnumList } from '../../../store/actions/dataAction';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -44,10 +46,13 @@ const MenuProps = {
 
 const EnumFilter = ({ onChangeEnum }) => {
   const classes = useStyles();
-  const [ageName, setAgeName] = React.useState([]);
+
+  const selectedArray = useSelector(state => state.dataReducer.selectedEnumList);
+
+  const dispatch = useDispatch();
 
   const handleChangeEnum = event => {
-    setAgeName(event.target.value);
+    dispatch(setEnumList(event.target.value));
   };
 
   return (
@@ -65,15 +70,15 @@ const EnumFilter = ({ onChangeEnum }) => {
               labelId="checkbox-label"
               id="checkbox"
               multiple
-              value={ageName}
-              onChange={onChangeEnum}
+              value={selectedArray}
+              onChange={handleChangeEnum}
               input={<Input />}
               renderValue={selected => selected.join(', ')}
               MenuProps={MenuProps}
             >
               {ageCategory.map(name => (
                 <MenuItem key={name} value={name}>
-                  <Checkbox checked={ageName.indexOf(name) > -1} />
+                  <Checkbox checked={selectedArray.indexOf(name) > -1} />
                   <ListItemText primary={name} />
                 </MenuItem>
               ))}
@@ -89,4 +94,4 @@ export default EnumFilter;
 
 EnumFilter.propTypes = {
   onChangeEnum: PropTypes.func.isRequired,
-}
+};

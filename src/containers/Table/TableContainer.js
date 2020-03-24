@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import MainTable from '../../components/MainTable/MainTable';
 import { delItem, loadData } from '../../store/actions/dataAction';
-import TableNav from '../../components/TableNav/TableNav';
 import PreLoader from '../../components/ui/PreLoader/PreLoader';
 import columns from '../../config/column';
 import { setAllRowSelected } from '../../store/actions/selectAction';
+import ToolsLogicContainer from '../Tools/ToolsContainer';
 
-const CustomTableContainer = () => {
+const TableLogicContainer = () => {
   const dispatch = useDispatch();
   const { isVirt, data, isLoading, selected } = useSelector(state => ({
     isVirt: state.switchVirtReducer.isVirt,
@@ -18,6 +18,7 @@ const CustomTableContainer = () => {
 
   useEffect(() => {
     dispatch(loadData());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const [order, setOrder] = useState('asc');
@@ -43,7 +44,7 @@ const CustomTableContainer = () => {
 
   return (
     <>
-      <TableNav />
+      <ToolsLogicContainer />
       {isLoading ? (
         <PreLoader />
       ) : (
@@ -64,4 +65,4 @@ const CustomTableContainer = () => {
   );
 };
 
-export default CustomTableContainer;
+export default TableLogicContainer;

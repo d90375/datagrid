@@ -7,7 +7,7 @@ import Paper from '@material-ui/core/Paper';
 import Header from './components/ui/Header';
 
 import theme from './styles/theme';
-import CustomTableContainer from './containers/Table/TableContainer';
+import TableLogicContainer from './containers/Table/TableContainer';
 
 const App = () => {
   return (
@@ -17,7 +17,7 @@ const App = () => {
         <Header />
         <main>
           <Paper elevation={4} style={{ paddingBottom: '10px' }}>
-            <CustomTableContainer />
+            <TableLogicContainer />
           </Paper>
         </main>
       </Container>
