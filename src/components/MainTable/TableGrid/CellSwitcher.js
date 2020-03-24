@@ -1,14 +1,14 @@
 import React from 'react';
-import DotActive from '../../TableToolBar/BooleanTool/DotActive';
-import DotDisable from '../../TableToolBar/BooleanTool/DotDisable';
 import TableCell from '@material-ui/core/TableCell';
 import { makeStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
+import DotActive from '../../TableToolBar/BooleanTool/DotActive';
+import DotDisable from '../../TableToolBar/BooleanTool/DotDisable';
 
 const useStyles = makeStyles(() => ({
   cell: {
     display: 'block',
-    maxWidth: '90px',
+    maxWidth: '120px',
     textOverflow: 'ellipsis',
     overflow: 'hidden',
     whiteSpace: 'nowrap',
@@ -39,13 +39,28 @@ const getResult = (column, value, index) => {
   return result;
 };
 
-const CellSwitcher = ({ column, value, index }) => {
+const CellSwitcher = ({ column, value, index, visibleColumns: { isAge, isSalary, isDistance, isHackedData, isStatus } }) => {
   const classes = useStyles();
+  const visibleColumns = {
+    id: true,
+    firstName: true,
+    lastName: true,
+    address: true,
+    ageCategory: isAge,
+    salary: isSalary,
+    distance: isDistance,
+    hackedDate: isHackedData,
+    status: isStatus,
+  };
 
   return (
-    <TableCell padding={column.disablePadding ? 'none' : 'default'} style={{ minWidth: column.width }} align={column.align}>
-      <span className={classes.cell}>{getResult(column, value, index)}</span>
-    </TableCell>
+    <>
+      {visibleColumns[column.id] && (
+        <TableCell padding={column.disablePadding ? 'none' : 'default'} style={{ minWidth: column.width }} align={column.align}>
+          <span className={classes.cell}>{getResult(column, value, index)}</span>
+        </TableCell>
+      )}
+    </>
   );
 };
 export default CellSwitcher;
@@ -59,6 +74,7 @@ CellSwitcher.propTypes = {
     align: PropTypes.string,
     format: PropTypes.func,
   }).isRequired,
-  value: PropTypes.number.isRequired,
+  value: PropTypes.oneOfType([PropTypes.bool, PropTypes.number, PropTypes.string, PropTypes.array]).isRequired,
   index: PropTypes.number.isRequired,
+  visibleColumns: PropTypes.objectOf(PropTypes.bool).isRequired,
 };

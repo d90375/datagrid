@@ -47,9 +47,11 @@ const MainTable = ({
   orderBy,
   onCreateSort,
   onSelectAllClick,
+  onChangeVisible,
   selected,
   onDelete,
 }) => {
+
   const [styledTableHeight, setStyledTableHeight] = useState(rowHeight * rows.length);
   const [tableHeight, setTableHeight] = useState(rowHeight * VIRT_ROW_COUNT);
   const [scroll, setScroll] = useState({
@@ -77,10 +79,11 @@ const MainTable = ({
     setScroll({ ...scroll, top: newStateTop, index: newStateIndex, end: newStateEnd });
   };
 
+
   return (
     <div className={classes.root}>
       <Paper elevation={3} className={classes.paper}>
-        <TableToolBar onDelete={onDelete} />
+        <TableToolBar onDelete={onDelete} visibleColumns={visibleColumns} onChangeVisible={onChangeVisible} />
         <TableContainer className={classes.container}>
           <Table
             onScroll={handleOnScroll}
@@ -149,7 +152,8 @@ MainTable.propTypes = {
   onDelete: PropTypes.func.isRequired,
   selected: PropTypes.arrayOf(PropTypes.number).isRequired,
   columns: PropTypes.arrayOf(PropTypes.object).isRequired,
-  visibleColumns: PropTypes.shape(PropTypes.bool).isRequired,
+  visibleColumns: PropTypes.objectOf(PropTypes.bool).isRequired,
+  onChangeVisible: PropTypes.func.isRequired,
 };
 
 export default MainTable;

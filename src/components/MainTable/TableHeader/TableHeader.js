@@ -25,8 +25,29 @@ const useStyles = makeStyles({
   },
 });
 
-const TableHeader = ({ columns, visibleColumns, selected, order, orderBy, onCreateSort, onSelectAllClick, rowCount }) => {
+const TableHeader = ({
+  columns,
+  selected,
+  order,
+  orderBy,
+  onCreateSort,
+  onSelectAllClick,
+  rowCount,
+  visibleColumns: { isAge, isSalary, isDistance, isHackedData, isStatus },
+}) => {
   const classes = useStyles();
+
+  const visibleColumns = {
+    id: true,
+    firstName: true,
+    lastName: true,
+    address: true,
+    ageCategory: isAge,
+    salary: isSalary,
+    distance: isDistance,
+    hackedDate: isHackedData,
+    status: isStatus,
+  };
 
   return (
     <>
@@ -41,23 +62,27 @@ const TableHeader = ({ columns, visibleColumns, selected, order, orderBy, onCrea
             />
           </TableCell>
           {columns.map(column => (
-            <TableCell
-              key={`header #${column.id}`}
-              style={{ minWidth: column.width }}
-              padding={column.disablePadding ? 'none' : 'default'}
-              sortDirection={orderBy === column.id ? order : false}
-              align={column.align}
-              title="Hold shift to sort a few columns"
-            >
-              <TableSortLabel
-                active={orderBy === column.id}
-                direction={orderBy === column.id ? order : 'asc'}
-                onClick={onCreateSort(column.id)}
-              >
-                {column.label}
-                <span className={classes.visuallyHidden}>{order === 'desc' ? 'sorted descending' : 'sorted ascending'}</span>
-              </TableSortLabel>
-            </TableCell>
+            <>
+              {visibleColumns[column.id] && (
+                <TableCell
+                  key={`header #${column.id}`}
+                  style={{ minWidth: column.width }}
+                  padding={column.disablePadding ? 'none' : 'default'}
+                  sortDirection={orderBy === column.id ? order : false}
+                  align={column.align}
+                  title="Hold shift to sort a few columns"
+                >
+                  <TableSortLabel
+                    active={orderBy === column.id}
+                    direction={orderBy === column.id ? order : 'asc'}
+                    onClick={onCreateSort(column.id)}
+                  >
+                    {column.label}
+                    <span className={classes.visuallyHidden}>{order === 'desc' ? 'sorted descending' : 'sorted ascending'}</span>
+                  </TableSortLabel>
+                </TableCell>
+              )}
+            </>
           ))}
         </TableRow>
       </TableHead>
@@ -75,5 +100,5 @@ TableHeader.propTypes = {
   columns: PropTypes.arrayOf(Object).isRequired,
   selected: PropTypes.arrayOf(PropTypes.number).isRequired,
   rowCount: PropTypes.number.isRequired,
-  visibleColumns: PropTypes.shape(PropTypes.bool).isRequired,
+  visibleColumns: PropTypes.objectOf(PropTypes.bool).isRequired,
 };

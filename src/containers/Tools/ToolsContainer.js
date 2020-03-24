@@ -12,6 +12,7 @@ const ToolsLogicContainer = () => {
   const handleChangeEnum = event => {
     dispatch(setEnumList(event.target.value));
   };
+
   return (
     <div>
       <TableNav onChangeEnum={handleChangeEnum} selectedEnumList={selectedEnumList} />

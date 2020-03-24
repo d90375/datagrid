@@ -32,7 +32,7 @@ const useStyles = makeStyles(() => ({
   }),
 }));
 
-const TableGrid = ({ rows, columns,visibleColumns, order, orderBy, scroll, rowHeight, styledTableHeight, selected }) => {
+const TableGrid = ({ rows, columns, visibleColumns, order, orderBy, scroll, rowHeight, styledTableHeight, selected }) => {
   const styledProp = { styledTableHeight };
   const classes = useStyles(styledProp);
   const dispatch = useDispatch();
@@ -81,7 +81,7 @@ const TableGrid = ({ rows, columns,visibleColumns, order, orderBy, scroll, rowHe
           <CheckBoxCell isItemSelected={isItemSelected} />
           {columns.map((column, i) => {
             const value = newRows[index][column.id];
-            return <CellSwitcher key={`cell #${column.id}`} column={column} value={value} index={i} />;
+            return <CellSwitcher key={`cell #${column.id}`} visibleColumns={visibleColumns} column={column} value={value} index={i} />;
           })}
         </TableRow>
       );
@@ -108,5 +108,5 @@ TableGrid.propTypes = {
   rowHeight: PropTypes.number.isRequired,
   styledTableHeight: PropTypes.number.isRequired,
   selected: PropTypes.arrayOf(PropTypes.number).isRequired,
-  visibleColumns: PropTypes.shape(PropTypes.bool).isRequired,
+  visibleColumns: PropTypes.objectOf(PropTypes.bool).isRequired,
 };

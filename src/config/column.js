@@ -1,5 +1,5 @@
 const columns = [
-  { id: 'id', label: 'Id', width: 50, align: 'left' },
+  { id: 'id', label: 'Id', width: 70, align: 'left' },
   { id: 'firstName', label: 'First name', width: 130, align: 'left' },
   {
     id: 'lastName',
@@ -16,13 +16,13 @@ const columns = [
   {
     id: 'ageCategory',
     label: 'Age',
-    width: 150,
+    width: 90,
     align: 'left',
   },
   {
     id: 'salary',
     label: 'Salary',
-    width: 180,
+    width: 150,
     align: 'left',
     format: value => value.toLocaleString(),
   },

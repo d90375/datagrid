@@ -7,9 +7,10 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import RemoveFromQueueIcon from '@material-ui/icons/RemoveFromQueue';
 
 import { useSelector } from 'react-redux';
-import Proptypes from 'prop-types';
+import PropTypes from 'prop-types';
 import BooleanTool from './BooleanTool/BooleanTool';
 import ColumnVis from './ClumnVis/ColumnVis';
+import TableHeader from '../MainTable/TableHeader/TableHeader';
 
 const useToolbarStyles = makeStyles(() => ({
   root: {
@@ -19,7 +20,7 @@ const useToolbarStyles = makeStyles(() => ({
   },
 }));
 
-const TableToolBar = ({ onDelete }) => {
+const TableToolBar = ({ onDelete, visibleColumns, onChangeVisible }) => {
   const classes = useToolbarStyles();
   const selected = useSelector(state => state.selectReducer);
 
@@ -34,7 +35,7 @@ const TableToolBar = ({ onDelete }) => {
           <RemoveFromQueueIcon />
         </IconButton>
       )}
-      <ColumnVis />
+      <ColumnVis visibleColumns={visibleColumns} onChangeVisible={onChangeVisible} />
       <BooleanTool />
     </Toolbar>
   );
@@ -43,5 +44,7 @@ const TableToolBar = ({ onDelete }) => {
 export default TableToolBar;
 
 TableToolBar.propTypes = {
-  onDelete: Proptypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired,
+  visibleColumns: PropTypes.objectOf(PropTypes.bool).isRequired,
+  onChangeVisible: PropTypes.func.isRequired,
 };

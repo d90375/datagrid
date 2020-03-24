@@ -12,31 +12,33 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const ColumnVis = () => {
+const ColumnVis = ({ visibleColumns, onChangeVisible }) => {
   const classes = useStyles();
 
-  const isStatus = true;
-  const handleChange = () => {};
+  const { isAge, isSalary, isDistance, isHackedData, isStatus } = visibleColumns;
 
   return (
     <FormControl component="fieldset" className={classes.formControl}>
       <FormGroup row>
-        <FormControlLabel control={<Checkbox color="primary" checked={isStatus} onChange={handleChange('')} value="age" />} label="age" />
+        <FormControlLabel
+          control={<Checkbox color="primary" checked={isAge} onChange={onChangeVisible('isAge')} value="age" />}
+          label="age"
+        />
 
         <FormControlLabel
-          control={<Checkbox color="primary" checked={isStatus} onChange={handleChange('')} value="salary" />}
+          control={<Checkbox color="primary" checked={isSalary} onChange={onChangeVisible('isSalary')} value="salary" />}
           label="salary"
         />
         <FormControlLabel
-          control={<Checkbox color="primary" checked={isStatus} onChange={handleChange('')} value="distance" />}
+          control={<Checkbox color="primary" checked={isDistance} onChange={onChangeVisible('isDistance')} value="distance" />}
           label="distance"
         />
         <FormControlLabel
-          control={<Checkbox color="primary" checked={isStatus} onChange={handleChange('')} value="hacked data" />}
+          control={<Checkbox color="primary" checked={isHackedData} onChange={onChangeVisible('isHackedData')} value="hacked data" />}
           label="hacked data"
         />
         <FormControlLabel
-          control={<Checkbox color="primary" checked={isStatus} onChange={handleChange('')} value="status" />}
+          control={<Checkbox color="primary" checked={isStatus} onChange={onChangeVisible('isStatus')} value="status" />}
           label="status"
         />
       </FormGroup>
@@ -46,6 +48,7 @@ const ColumnVis = () => {
 
 export default ColumnVis;
 
-ColumnVis.propTypes = {};
-
-
+ColumnVis.propTypes = {
+  visibleColumns: PropTypes.objectOf(PropTypes.bool).isRequired,
+  onChangeVisible: PropTypes.func.isRequired,
+};

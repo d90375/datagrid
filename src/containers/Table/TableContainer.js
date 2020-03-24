@@ -6,7 +6,7 @@ import PreLoader from '../../components/ui/PreLoader/PreLoader';
 import columns from '../../config/column';
 import { setAllRowSelected } from '../../store/actions/selectAction';
 import ToolsLogicContainer from '../Tools/ToolsContainer';
-import columnReducer from '../../store/reducers/columnReducer';
+import { setVisibleColumn } from '../../store/actions/columnAction';
 
 const TableLogicContainer = () => {
   const dispatch = useDispatch();
@@ -36,6 +36,10 @@ const TableLogicContainer = () => {
     handleRequestSort(event, property);
   };
 
+  const handleChangeVisible = name => event => {
+    dispatch(setVisibleColumn({ ...visibleColumns, [name]: event.target.checked }));
+  };
+
   const handleSelectAllClick = event => {
     dispatch(setAllRowSelected(event, data));
   };
@@ -61,6 +65,7 @@ const TableLogicContainer = () => {
           onCreateSort={handleCreateSort}
           onSelectAllClick={handleSelectAllClick}
           onRequestSort={handleRequestSort}
+          onChangeVisible={handleChangeVisible}
           selected={selected}
         />
       )}
