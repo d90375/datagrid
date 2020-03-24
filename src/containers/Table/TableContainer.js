@@ -6,10 +6,12 @@ import PreLoader from '../../components/ui/PreLoader/PreLoader';
 import columns from '../../config/column';
 import { setAllRowSelected } from '../../store/actions/selectAction';
 import ToolsLogicContainer from '../Tools/ToolsContainer';
+import columnReducer from '../../store/reducers/columnReducer';
 
 const TableLogicContainer = () => {
   const dispatch = useDispatch();
-  const { isVirt, data, isLoading, selected } = useSelector(state => ({
+  const { isVirt, data, isLoading, selected, visibleColumns } = useSelector(state => ({
+    visibleColumns: state.columnReducer.visibleColumns,
     isVirt: state.switchVirtReducer.isVirt,
     data: state.dataReducer.data,
     isLoading: state.dataReducer.isLoading,
@@ -51,6 +53,7 @@ const TableLogicContainer = () => {
         <MainTable
           rows={data}
           columns={columns}
+          visibleColumns={visibleColumns}
           isVirt={isVirt}
           order={order}
           orderBy={orderBy}

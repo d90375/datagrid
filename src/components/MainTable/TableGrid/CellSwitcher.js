@@ -1,6 +1,19 @@
 import React from 'react';
 import DotActive from '../../TableToolBar/BooleanTool/DotActive';
 import DotDisable from '../../TableToolBar/BooleanTool/DotDisable';
+import TableCell from '@material-ui/core/TableCell';
+import { makeStyles } from '@material-ui/core/styles';
+import PropTypes from 'prop-types';
+
+const useStyles = makeStyles(() => ({
+  cell: {
+    display: 'block',
+    maxWidth: '90px',
+    textOverflow: 'ellipsis',
+    overflow: 'hidden',
+    whiteSpace: 'nowrap',
+  },
+}));
 
 const getResult = (column, value, index) => {
   let result;
@@ -27,6 +40,25 @@ const getResult = (column, value, index) => {
 };
 
 const CellSwitcher = ({ column, value, index }) => {
-  return <>{getResult(column, value, index)}</>;
+  const classes = useStyles();
+
+  return (
+    <TableCell padding={column.disablePadding ? 'none' : 'default'} style={{ minWidth: column.width }} align={column.align}>
+      <span className={classes.cell}>{getResult(column, value, index)}</span>
+    </TableCell>
+  );
 };
 export default CellSwitcher;
+
+CellSwitcher.propTypes = {
+  column: PropTypes.shape({
+    id: PropTypes.string,
+    label: PropTypes.string,
+    disablePadding: PropTypes.bool,
+    width: PropTypes.number,
+    align: PropTypes.string,
+    format: PropTypes.func,
+  }).isRequired,
+  value: PropTypes.number.isRequired,
+  index: PropTypes.number.isRequired,
+};

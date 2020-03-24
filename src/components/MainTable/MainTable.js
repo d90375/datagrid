@@ -37,7 +37,19 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const MainTable = ({ rows, columns, rowHeight, isVirt, order, orderBy, onCreateSort, onSelectAllClick, selected, onDelete }) => {
+const MainTable = ({
+  rows,
+  columns,
+  visibleColumns,
+  rowHeight,
+  isVirt,
+  order,
+  orderBy,
+  onCreateSort,
+  onSelectAllClick,
+  selected,
+  onDelete,
+}) => {
   const [styledTableHeight, setStyledTableHeight] = useState(rowHeight * rows.length);
   const [tableHeight, setTableHeight] = useState(rowHeight * VIRT_ROW_COUNT);
   const [scroll, setScroll] = useState({
@@ -85,6 +97,7 @@ const MainTable = ({ rows, columns, rowHeight, isVirt, order, orderBy, onCreateS
               onSelectAllClick={onSelectAllClick}
               onCreateSort={onCreateSort}
               rowCount={rows.length}
+              visibleColumns={visibleColumns}
             />
             <TableGrid
               selected={selected}
@@ -95,6 +108,7 @@ const MainTable = ({ rows, columns, rowHeight, isVirt, order, orderBy, onCreateS
               scroll={scroll}
               rowHeight={rowHeight}
               styledTableHeight={styledTableHeight}
+              visibleColumns={visibleColumns}
             />
           </Table>
         </TableContainer>
@@ -133,8 +147,9 @@ MainTable.propTypes = {
     })
   ).isRequired,
   onDelete: PropTypes.func.isRequired,
-  selected: PropTypes.arrayOf(PropTypes.object).isRequired,
+  selected: PropTypes.arrayOf(PropTypes.number).isRequired,
   columns: PropTypes.arrayOf(PropTypes.object).isRequired,
+  visibleColumns: PropTypes.shape(PropTypes.bool).isRequired,
 };
 
 export default MainTable;

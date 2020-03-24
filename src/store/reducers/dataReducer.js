@@ -7,6 +7,13 @@ const initialState = {
   error: '',
   searchValue: '',
   selectedEnumList: [],
+  visibleColumns: {
+    isAge: true,
+    isSalary: true,
+    isDistance: true,
+    isHackedData: true,
+    isStatus: true,
+  },
 };
 
 const dataReducer = (state = initialState, action) => {
@@ -56,7 +63,7 @@ const dataReducer = (state = initialState, action) => {
     case SWITCH_FILTER:
       state.selectedEnumList = action.value;
       if (state.selectedEnumList.length > 0) {
-        console.log(state.selectedEnumList)
+        console.log(state.selectedEnumList);
         const result = state.data.filter(item => state.selectedEnumList.some(el => el === item.ageCategory));
         console.log(result);
         return { ...state, data: result };

@@ -1,11 +1,11 @@
 import React from 'react';
 import TableRow from '@material-ui/core/TableRow';
-import TableCell from '@material-ui/core/TableCell';
 import TableBody from '@material-ui/core/TableBody';
 
-import { useDispatch} from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 
+import PropTypes from 'prop-types';
 import getComparator from '../../../utils/getComparator';
 import stableSort from '../../../utils/stableSort';
 import CheckBoxCell from './CheckBoxCell/CheckBoxCell';
@@ -23,13 +23,6 @@ import { setRowSelected } from '../../../store/actions/selectAction';
 // )(TableRow);]
 
 const useStyles = makeStyles(() => ({
-  cell: {
-    display: 'block',
-    maxWidth: '90px',
-    textOverflow: 'ellipsis',
-    overflow: 'hidden',
-    whiteSpace: 'nowrap',
-  },
   tBody: prop => ({
     position: 'relative',
     display: 'inline-block',
@@ -39,10 +32,10 @@ const useStyles = makeStyles(() => ({
   }),
 }));
 
-const TableGrid = ({ rows, columns, order, orderBy, scroll, rowHeight, styledTableHeight,selected }) => {
+const TableGrid = ({ rows, columns,visibleColumns, order, orderBy, scroll, rowHeight, styledTableHeight, selected }) => {
   const styledProp = { styledTableHeight };
   const classes = useStyles(styledProp);
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const isSelected = name => selected.indexOf(name) !== -1;
 
   const sortedRow = stableSort(rows, getComparator(order, orderBy));
@@ -77,6 +70,7 @@ const TableGrid = ({ rows, columns, order, orderBy, scroll, rowHeight, styledTab
       items.push(
         <TableRow
           {...rowAttrs}
+          key={`row #${index}`}
           hover
           onClick={() => dispatch(setRowSelected(selectedCell))}
           role="checkbox"
@@ -87,13 +81,7 @@ const TableGrid = ({ rows, columns, order, orderBy, scroll, rowHeight, styledTab
           <CheckBoxCell isItemSelected={isItemSelected} />
           {columns.map((column, i) => {
             const value = newRows[index][column.id];
-            return (
-              <TableCell padding={column.disablePadding ? 'none' : 'default'} style={{ minWidth: column.width }} key={column.id} align={column.align}>
-                <span className={classes.cell}>
-                  <CellSwitcher column={column} value={value} index={i} />
-                </span>
-              </TableCell>
-            );
+            return <CellSwitcher key={`cell #${column.id}`} column={column} value={value} index={i} />;
           })}
         </TableRow>
       );
@@ -110,3 +98,15 @@ const TableGrid = ({ rows, columns, order, orderBy, scroll, rowHeight, styledTab
 };
 
 export default TableGrid;
+
+TableGrid.propTypes = {
+  rows: PropTypes.arrayOf(PropTypes.object).isRequired,
+  columns: PropTypes.arrayOf(Object).isRequired,
+  order: PropTypes.string.isRequired,
+  orderBy: PropTypes.string.isRequired,
+  scroll: PropTypes.shape({ top: PropTypes.number, index: PropTypes.number, end: PropTypes.number }).isRequired,
+  rowHeight: PropTypes.number.isRequired,
+  styledTableHeight: PropTypes.number.isRequired,
+  selected: PropTypes.arrayOf(PropTypes.number).isRequired,
+  visibleColumns: PropTypes.shape(PropTypes.bool).isRequired,
+};

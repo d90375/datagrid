@@ -2,6 +2,8 @@ import React from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
 
+import PropTypes, { array, arrayOf, func } from 'prop-types';
+
 import Search from './Search/Search';
 import VirtualizeLabel from './ControlLabel/VirtulizeLabel';
 import EnumFilter from './EnumFilter/EnumFilter';
@@ -34,14 +36,14 @@ const useStyles = makeStyles({
   },
 });
 
-const TableNav = () => {
+const TableNav = ({ onChangeEnum, selectedEnumList }) => {
   const classes = useStyles();
   return (
     <>
       <div className={classes.nav}>
         <div className={classes.leftNavContainer}>
           <Search />
-          <EnumFilter />
+          <EnumFilter onChangeEnum={onChangeEnum} selectedEnumList={selectedEnumList} />
         </div>
         <div className={classes.rightNavContainer}>
           <VirtualizeLabel />
@@ -56,3 +58,8 @@ const TableNav = () => {
 };
 
 export default TableNav;
+
+TableNav.propTypes = {
+  onChangeEnum: PropTypes.func.isRequired,
+  selectedEnumList: PropTypes.arrayOf(PropTypes.number).isRequired,
+};

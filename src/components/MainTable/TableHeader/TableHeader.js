@@ -20,16 +20,19 @@ const useStyles = makeStyles({
     top: 20,
     width: 1,
   },
+  checkbox: {
+    padding: 0,
+  },
 });
 
-const TableHeader = ({ columns, selected, order, orderBy, onCreateSort, onSelectAllClick, rowCount }) => {
+const TableHeader = ({ columns, visibleColumns, selected, order, orderBy, onCreateSort, onSelectAllClick, rowCount }) => {
   const classes = useStyles();
 
   return (
     <>
       <TableHead>
         <TableRow>
-          <TableCell padding="checkbox">
+          <TableCell className={classes.checkbox} padding="checkbox">
             <Checkbox
               indeterminate={selected.length > 0 && selected.length < rowCount}
               checked={rowCount > 0 && selected.length === rowCount}
@@ -38,23 +41,23 @@ const TableHeader = ({ columns, selected, order, orderBy, onCreateSort, onSelect
             />
           </TableCell>
           {columns.map(column => (
-            <>
-              <TableCell
-                style={{ minWidth: column.width }}
-                padding={column.disablePadding ? 'none' : 'default'}
-                sortDirection={orderBy === column.id ? order : false}
-                align={column.align}
+            <TableCell
+              key={`header #${column.id}`}
+              style={{ minWidth: column.width }}
+              padding={column.disablePadding ? 'none' : 'default'}
+              sortDirection={orderBy === column.id ? order : false}
+              align={column.align}
+              title="Hold shift to sort a few columns"
+            >
+              <TableSortLabel
+                active={orderBy === column.id}
+                direction={orderBy === column.id ? order : 'asc'}
+                onClick={onCreateSort(column.id)}
               >
-                <TableSortLabel
-                  active={orderBy === column.id}
-                  direction={orderBy === column.id ? order : 'asc'}
-                  onClick={onCreateSort(column.id)}
-                >
-                  {column.label}
-                  <span className={classes.visuallyHidden}>{order === 'desc' ? 'sorted descending' : 'sorted ascending'}</span>
-                </TableSortLabel>
-              </TableCell>
-            </>
+                {column.label}
+                <span className={classes.visuallyHidden}>{order === 'desc' ? 'sorted descending' : 'sorted ascending'}</span>
+              </TableSortLabel>
+            </TableCell>
           ))}
         </TableRow>
       </TableHead>
@@ -69,9 +72,8 @@ TableHeader.propTypes = {
   onSelectAllClick: PropTypes.func.isRequired,
   order: PropTypes.oneOf(['asc', 'desc']).isRequired,
   orderBy: PropTypes.string.isRequired,
-  // eslint-disable-next-line react/forbid-prop-types
-  columns: PropTypes.array.isRequired,
-  // eslint-disable-next-line react/forbid-prop-types
-  selected: PropTypes.array.isRequired,
+  columns: PropTypes.arrayOf(Object).isRequired,
+  selected: PropTypes.arrayOf(PropTypes.number).isRequired,
   rowCount: PropTypes.number.isRequired,
+  visibleColumns: PropTypes.shape(PropTypes.bool).isRequired,
 };

@@ -13,6 +13,7 @@ import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { ageCategory } from '../../../constants';
 import { setEnumList } from '../../../store/actions/dataAction';
+import TableNav from '../TableNav';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -44,16 +45,8 @@ const MenuProps = {
   },
 };
 
-const EnumFilter = ({ onChangeEnum }) => {
+const EnumFilter = ({ onChangeEnum, selectedEnumList }) => {
   const classes = useStyles();
-
-  const selectedArray = useSelector(state => state.dataReducer.selectedEnumList);
-
-  const dispatch = useDispatch();
-
-  const handleChangeEnum = event => {
-    dispatch(setEnumList(event.target.value));
-  };
 
   return (
     <div className={classes.root}>
@@ -70,15 +63,15 @@ const EnumFilter = ({ onChangeEnum }) => {
               labelId="checkbox-label"
               id="checkbox"
               multiple
-              value={selectedArray}
-              onChange={handleChangeEnum}
+              value={selectedEnumList}
+              onChange={onChangeEnum}
               input={<Input />}
               renderValue={selected => selected.join(', ')}
               MenuProps={MenuProps}
             >
               {ageCategory.map(name => (
                 <MenuItem key={name} value={name}>
-                  <Checkbox checked={selectedArray.indexOf(name) > -1} />
+                  <Checkbox checked={selectedEnumList.indexOf(name) > -1} />
                   <ListItemText primary={name} />
                 </MenuItem>
               ))}
@@ -94,4 +87,5 @@ export default EnumFilter;
 
 EnumFilter.propTypes = {
   onChangeEnum: PropTypes.func.isRequired,
+  selectedEnumList: PropTypes.arrayOf(PropTypes.number).isRequired,
 };
