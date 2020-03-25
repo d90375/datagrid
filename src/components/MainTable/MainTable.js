@@ -133,12 +133,10 @@ MainTable.propTypes = {
       id: PropTypes.number,
       firstName: PropTypes.string,
       lastName: PropTypes.string,
-      address: PropTypes.arrayOf(
-        PropTypes.shape({
-          state: PropTypes.string,
-          city: PropTypes.string,
-        })
-      ),
+      address: PropTypes.shape({
+        state: PropTypes.string,
+        city: PropTypes.string,
+      }),
       ageCategory: PropTypes.number,
       salary: PropTypes.number,
       distance: PropTypes.number,

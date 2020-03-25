@@ -12,6 +12,9 @@ const useStyles = makeStyles(() => ({
       border: '1px solid rgba(225,255,255,1)',
     },
   },
+  visuallyHidden: {
+    color: 'rgba(0,0,0,0)',
+  },
 }));
 
 const SaveCSV = ({ onSaveCSV }) => {
@@ -28,5 +31,5 @@ const SaveCSV = ({ onSaveCSV }) => {
 export default SaveCSV;
 
 SaveCSV.propTypes = {
-  onSaveCSV: PropTypes.func,
+  onSaveCSV: PropTypes.func.isRequired,
 };

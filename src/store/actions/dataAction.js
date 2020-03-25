@@ -1,4 +1,12 @@
-import { DELETE_ITEM, LOAD_DATA_SUCCESS, LOAD_PRELOADER, SET_SEARCH, SWITCH_FILTER } from '../actionTypes';
+import {
+  DELETE_ITEM,
+  LOAD_DATA_SUCCESS,
+  LOAD_PRELOADER,
+  SET_SEARCH,
+  SWITCH_FILTER,
+  BOOL_ACTIVE_FILTER,
+  BOOL_DISABLE_FILTER,
+} from '../actionTypes';
 import data from '../../config/data/hackerData';
 
 export const setSearch = searchValue => ({
@@ -14,6 +22,14 @@ export const delItem = selected => ({
 export const setEnumList = value => ({
   type: SWITCH_FILTER,
   value,
+});
+
+export const toggleActiveStatus = () => ({
+  type: BOOL_ACTIVE_FILTER,
+});
+
+export const toggleDisableStatus = () => ({
+  type: BOOL_DISABLE_FILTER,
 });
 
 export const loadData = () => dispatch => {

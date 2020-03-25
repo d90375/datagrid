@@ -19,7 +19,7 @@ const getResult = (column, value, index) => {
   let result;
   switch (index) {
     case 3:
-      result = value.map(e => `${e.state}/${e.city}`);
+      result = `${value.state}/${value.city}`;
       break;
     case 5:
       result = column.format(value);
@@ -74,7 +74,7 @@ CellSwitcher.propTypes = {
     align: PropTypes.string,
     format: PropTypes.func,
   }).isRequired,
-  value: PropTypes.oneOfType([PropTypes.bool, PropTypes.number, PropTypes.string, PropTypes.array]).isRequired,
+  value: PropTypes.oneOfType([PropTypes.bool, PropTypes.number, PropTypes.string, PropTypes.object]).isRequired,
   index: PropTypes.number.isRequired,
   visibleColumns: PropTypes.objectOf(PropTypes.bool).isRequired,
 };

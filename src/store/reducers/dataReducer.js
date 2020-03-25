@@ -1,23 +1,46 @@
-import { SET_SEARCH, LOAD_PRELOADER, LOAD_DATA_SUCCESS, LOAD_DATA_ERROR, DELETE_ITEM, SWITCH_FILTER } from '../actionTypes';
-
+// import { load } from 'redux-localstorage-simple';
+import {
+  SET_SEARCH,
+  LOAD_PRELOADER,
+  LOAD_DATA_SUCCESS,
+  LOAD_DATA_ERROR,
+  DELETE_ITEM,
+  SWITCH_FILTER,
+  BOOL_ACTIVE_FILTER,
+  BOOL_DISABLE_FILTER,
+} from '../actionTypes';
 
 // const DATA = load({ namespace: 'grid' });
-// let initialState = DATA.sortReducer;
+// let dataState = DATA.dataReducer;
 //
-// if (!initialState) {
+// dataState = {
+//   currentData: [],
+//   data: [],
+//   selectedEnumList: [],
+// };
 //
+// if (!dataState) {
+//   dataState = {
+//     isLoading: true,
+//     error: '',
+//     searchValue: '',
+//     activeBool: false,
+//     disableBool: false,
+//   };
 // }
 
-const initialState = {
+const dataState = {
   currentData: [],
-  data: [1],
+  data: [],
   isLoading: true,
   error: '',
   searchValue: '',
   selectedEnumList: [],
+  activeBool: false,
+  disableBool: false,
 };
 
-const dataReducer = (state = initialState, action) => {
+const dataReducer = (state = dataState, action) => {
   switch (action.type) {
     case LOAD_PRELOADER: {
       return {
@@ -25,6 +48,20 @@ const dataReducer = (state = initialState, action) => {
         isLoading: false,
         error: '',
       };
+    }
+    case BOOL_ACTIVE_FILTER: {
+      if (!state.activeBool) {
+        const result = state.currentData.filter(item => item.status !== state.activeBool && !state.disableBool);
+        return { ...state, data: result, activeBool: !state.activeBool };
+      }
+      return { ...state, data: state.currentData, activeBool: !state.activeBool };
+    }
+    case BOOL_DISABLE_FILTER: {
+      if (!state.disableBool) {
+        const result = state.currentData.filter(item => item.status === state.disableBool && !state.activeBool);
+        return { ...state, data: result, disableBool: !state.disableBool };
+      }
+      return { ...state, data: state.currentData, disableBool: !state.disableBool };
     }
     case LOAD_DATA_SUCCESS: {
       return {
@@ -56,8 +93,8 @@ const dataReducer = (state = initialState, action) => {
           item =>
             item.firstName.toLowerCase().includes(action.searchValue.toLowerCase()) ||
             item.lastName.toLowerCase().includes(action.searchValue.toLowerCase()) ||
-            item.address[0].city.toLowerCase().includes(action.searchValue.toLowerCase()) ||
-            item.address[0].state.toLowerCase().includes(action.searchValue.toLowerCase())
+            item.address.city.toLowerCase().includes(action.searchValue.toLowerCase()) ||
+            item.address.state.toLowerCase().includes(action.searchValue.toLowerCase())
         );
         return { ...state, data: result, searchValue: action.searchValue };
       }

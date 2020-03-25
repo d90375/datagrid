@@ -35,7 +35,7 @@ const useStyles = makeStyles({
   },
 });
 
-const TableNav = ({ onChangeEnum, selectedEnumList, onValueChanged, searchValueText }) => {
+const TableNav = ({ onChangeEnum, selectedEnumList, onValueChanged, searchValueText, onSaveCSV }) => {
   const classes = useStyles();
   return (
     <>
@@ -48,7 +48,7 @@ const TableNav = ({ onChangeEnum, selectedEnumList, onValueChanged, searchValueT
           <VirtualizeLabel />
           <div className={classes.buttonContainer}>
             <QueryString />
-            <SaveCSV />
+            <SaveCSV onSaveCSV={onSaveCSV} />
           </div>
         </div>
       </div>
@@ -63,4 +63,5 @@ TableNav.propTypes = {
   selectedEnumList: PropTypes.arrayOf(PropTypes.number).isRequired,
   onValueChanged: PropTypes.func.isRequired,
   searchValueText: PropTypes.string.isRequired,
+  onSaveCSV: PropTypes.func.isRequired,
 };

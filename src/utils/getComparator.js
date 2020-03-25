@@ -1,9 +1,9 @@
 function descendingComparator(a, b, orderBy) {
   if (orderBy === 'address') {
-    if (b[orderBy][0].state < a[orderBy][0].state) {
+    if (b[orderBy].state < a[orderBy].state) {
       return -1;
     }
-    if (b[orderBy][0].state > a[orderBy][0].state) {
+    if (b[orderBy].state > a[orderBy].state) {
       return 1;
     }
     return 0;
