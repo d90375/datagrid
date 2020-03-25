@@ -33,7 +33,6 @@ const TableGrid = ({ rows, columns, visibleColumns, order, orderBy, scroll, rowH
   const generateRows = () => {
     const styledRowHeight = rowHeight;
     const newRows = sortedRow;
-    // eslint-disable-next-line react/prop-types
     let { index } = scroll;
     const items = [];
 
@@ -57,6 +56,7 @@ const TableGrid = ({ rows, columns, visibleColumns, order, orderBy, scroll, rowH
       };
 
       const selectedCell = newRows[index].id;
+      const columnIndex = index;
       items.push(
         <TableRow
           {...rowAttrs}
@@ -70,7 +70,7 @@ const TableGrid = ({ rows, columns, visibleColumns, order, orderBy, scroll, rowH
         >
           <CheckBoxCell isItemSelected={isItemSelected} />
           {columns.map((column, i) => {
-            const value = newRows[index][column.id];
+            const value = newRows[columnIndex][column.id];
             return <CellSwitcher key={`cell #${column.id}`} visibleColumns={visibleColumns} column={column} value={value} index={i} />;
           })}
         </TableRow>
