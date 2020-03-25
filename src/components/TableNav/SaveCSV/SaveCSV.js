@@ -8,6 +8,9 @@ const useStyles = makeStyles(() => ({
   btn: {
     color: '#FFF',
     borderColor: 'rgba(255, 255, 255, 0.5)',
+    '&:hover': {
+      border: '1px solid rgba(225,255,255,1)',
+    },
   },
 }));
 

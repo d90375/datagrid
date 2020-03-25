@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import PropTypes from 'prop-types';
 import MainTable from '../../components/MainTable/MainTable';
 import { delItem, loadData } from '../../store/actions/dataAction';
 import PreLoader from '../../components/ui/PreLoader/PreLoader';
@@ -9,7 +10,7 @@ import { setVisibleColumn } from '../../store/actions/columnAction';
 import { SORT_ASC, SORT_DESC } from '../../constants';
 import { loadColumns, setOrderList } from '../../store/actions/sortAction';
 
-const TableLogicContainer = () => {
+const TableLogicContainer = ({ searchRoute }) => {
   const dispatch = useDispatch();
   const { isVirt, data, isLoading, selected, visibleColumns, columnSettings } = useSelector(state => ({
     columnSettings: state.sortReducer.columnSettings,
@@ -72,7 +73,7 @@ const TableLogicContainer = () => {
 
   return (
     <>
-      <ToolsLogicContainer />
+      <ToolsLogicContainer searchRoute={searchRoute} />
       {isLoading ? (
         <PreLoader />
       ) : (
@@ -95,3 +96,7 @@ const TableLogicContainer = () => {
 };
 
 export default TableLogicContainer;
+
+TableLogicContainer.propTypes = {
+  searchRoute: PropTypes.string.isRequired,
+};

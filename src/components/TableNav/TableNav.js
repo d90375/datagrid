@@ -35,13 +35,13 @@ const useStyles = makeStyles({
   },
 });
 
-const TableNav = ({ onChangeEnum, selectedEnumList }) => {
+const TableNav = ({ onChangeEnum, selectedEnumList, onValueChanged, searchValueText }) => {
   const classes = useStyles();
   return (
     <>
       <div className={classes.nav}>
         <div className={classes.leftNavContainer}>
-          <Search />
+          <Search searchValueText={searchValueText} onValueChanged={onValueChanged} />
           <EnumFilter onChangeEnum={onChangeEnum} selectedEnumList={selectedEnumList} />
         </div>
         <div className={classes.rightNavContainer}>
@@ -61,4 +61,6 @@ export default TableNav;
 TableNav.propTypes = {
   onChangeEnum: PropTypes.func.isRequired,
   selectedEnumList: PropTypes.arrayOf(PropTypes.number).isRequired,
+  onValueChanged: PropTypes.func.isRequired,
+  searchValueText: PropTypes.string.isRequired,
 };

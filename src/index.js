@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './styles/index.css';
 import { createStore, compose, applyMiddleware } from 'redux';
+import { HashRouter, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { save } from 'redux-localstorage-simple';
 import thunk from 'redux-thunk';
@@ -21,7 +22,9 @@ const store = configureStore({});
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <HashRouter>
+      <Route path="/" component={App} />
+    </HashRouter>
   </Provider>,
   document.getElementById('root')
 );

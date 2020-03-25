@@ -52,6 +52,7 @@ module.exports = {
     'react/jsx-wrap-multilines': [0],
     'react/jsx-props-no-spreading': [0],
     'no-console': [2],
+    'react-hooks/exhaustive-deps': 0,
   },
 
   overrides: [
