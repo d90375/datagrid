@@ -22,10 +22,10 @@ const getResult = (column, value, index) => {
       result = `${value.state}/${value.city}`;
       break;
     case 5:
-      result = column.format(value);
+      result = value.toLocaleString();
       break;
     case 6:
-      result = column.format(value);
+      result = value.toFixed(column.format);
       break;
     case 7:
       result = value.split('T').join(' ');
@@ -72,7 +72,7 @@ CellSwitcher.propTypes = {
     disablePadding: PropTypes.bool,
     width: PropTypes.number,
     align: PropTypes.string,
-    format: PropTypes.func,
+    format: PropTypes.string,
   }).isRequired,
   value: PropTypes.oneOfType([PropTypes.bool, PropTypes.number, PropTypes.string, PropTypes.object]).isRequired,
   index: PropTypes.number.isRequired,

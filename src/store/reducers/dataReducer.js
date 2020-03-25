@@ -1,4 +1,4 @@
-// import { load } from 'redux-localstorage-simple';
+import { load } from 'redux-localstorage-simple';
 import {
   SET_SEARCH,
   LOAD_PRELOADER,
@@ -10,35 +10,32 @@ import {
   BOOL_DISABLE_FILTER,
 } from '../actionTypes';
 
-// const DATA = load({ namespace: 'grid' });
-// let dataState = DATA.dataReducer;
+const DATA = load({ namespace: 'grid' });
+let dataState = DATA.dataReducer;
+
+if (!DATA || !dataState) {
+  dataState = {
+    searchValue: '',
+    selectedEnumList: [],
+    isLoading: true,
+    currentData: [],
+    data: [],
+    error: '',
+    activeBool: false,
+    disableBool: false,
+  };
+}
 //
-// dataState = {
+// const dataState = {
 //   currentData: [],
 //   data: [],
+//   isLoading: true,
+//   error: '',
+//   searchValue: '',
 //   selectedEnumList: [],
+//   activeBool: false,
+//   disableBool: false,
 // };
-//
-// if (!dataState) {
-//   dataState = {
-//     isLoading: true,
-//     error: '',
-//     searchValue: '',
-//     activeBool: false,
-//     disableBool: false,
-//   };
-// }
-
-const dataState = {
-  currentData: [],
-  data: [],
-  isLoading: true,
-  error: '',
-  searchValue: '',
-  selectedEnumList: [],
-  activeBool: false,
-  disableBool: false,
-};
 
 const dataReducer = (state = dataState, action) => {
   switch (action.type) {
@@ -112,10 +109,3 @@ const dataReducer = (state = dataState, action) => {
 };
 
 export default dataReducer;
-
-// const result = action.selectedEnumList.map(selectedItem => {
-//   console.log(selectedItem)
-//   return state.data.filter(item => {
-//     return item.ageCategory.includes(selectedItem);
-//   });
-// });

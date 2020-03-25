@@ -5,7 +5,7 @@ import columns from '../../config/column';
 const DATA = load({ namespace: 'grid' });
 let initialState = DATA.sortReducer;
 
-if (!initialState) {
+if (!DATA || !initialState) {
   initialState = {
     columnsSettings: columns,
   };
