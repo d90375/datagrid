@@ -8,3 +8,5 @@ export const LOAD_DATA_ERROR = 'LOAD_DATA_ERROR';
 export const DELETE_ITEM = 'DELETE_ITEM';
 export const SWITCH_FILTER = 'SWITCH_FILTER';
 export const SET_COLUMN_DISPLAY = 'SET_COLUMN_DISPLAY';
+export const LOAD_COLUMN = 'LOAD_COLUMN';
+export const CHANGE_ORDER = 'CHANGE_ORDER';

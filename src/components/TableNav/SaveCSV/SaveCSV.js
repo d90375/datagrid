@@ -2,6 +2,7 @@ import React from 'react';
 import Button from '@material-ui/core/Button';
 import SaveIcon from '@material-ui/icons/Save';
 import { makeStyles } from '@material-ui/core/styles';
+import PropTypes from 'prop-types';
 
 const useStyles = makeStyles(() => ({
   btn: {
@@ -10,11 +11,11 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const SaveCSV = () => {
+const SaveCSV = ({ onSaveCSV }) => {
   const classes = useStyles();
   return (
     <>
-      <Button className={classes.btn} variant="outlined" startIcon={<SaveIcon />}>
+      <Button className={classes.btn} onClick={onSaveCSV} variant="outlined" startIcon={<SaveIcon />}>
         CSV
       </Button>
     </>
@@ -22,3 +23,7 @@ const SaveCSV = () => {
 };
 
 export default SaveCSV;
+
+SaveCSV.propTypes = {
+  onSaveCSV: PropTypes.func,
+};

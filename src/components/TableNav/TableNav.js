@@ -2,8 +2,7 @@ import React from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
 
-import PropTypes, { array, arrayOf, func } from 'prop-types';
-
+import PropTypes from 'prop-types';
 import Search from './Search/Search';
 import VirtualizeLabel from './ControlLabel/VirtulizeLabel';
 import EnumFilter from './EnumFilter/EnumFilter';

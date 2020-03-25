@@ -10,7 +10,6 @@ import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import BooleanTool from './BooleanTool/BooleanTool';
 import ColumnVis from './ClumnVis/ColumnVis';
-import TableHeader from '../MainTable/TableHeader/TableHeader';
 
 const useToolbarStyles = makeStyles(() => ({
   root: {

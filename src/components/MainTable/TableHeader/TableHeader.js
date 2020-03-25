@@ -20,6 +20,18 @@ const useStyles = makeStyles({
     top: 20,
     width: 1,
   },
+  queue: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '15px',
+    height: '15px',
+    backgroundColor: '#5659A3',
+    borderRadius: '50%',
+  },
+  qText: {
+    color: '#FFF',
+  },
   checkbox: {
     padding: 0,
   },
@@ -28,7 +40,6 @@ const useStyles = makeStyles({
 const TableHeader = ({
   columns,
   selected,
-  order,
   orderBy,
   onCreateSort,
   onSelectAllClick,
@@ -62,27 +73,32 @@ const TableHeader = ({
             />
           </TableCell>
           {columns.map(column => (
-            <>
+            <React.Fragment key={`header #${column.id}`}>
               {visibleColumns[column.id] && (
                 <TableCell
                   key={`header #${column.id}`}
                   style={{ minWidth: column.width }}
                   padding={column.disablePadding ? 'none' : 'default'}
-                  sortDirection={orderBy === column.id ? order : false}
+                  sortDirection={orderBy === column.id ? column.order : false}
                   align={column.align}
                   title="Hold shift to sort a few columns"
                 >
                   <TableSortLabel
                     active={orderBy === column.id}
-                    direction={orderBy === column.id ? order : 'asc'}
-                    onClick={onCreateSort(column.id)}
+                    direction={orderBy === column.id ? column.order : 'asc'}
+                    onClick={onCreateSort(column)}
                   >
                     {column.label}
-                    <span className={classes.visuallyHidden}>{order === 'desc' ? 'sorted descending' : 'sorted ascending'}</span>
+                    <span className={classes.visuallyHidden}>{column.order === 'desc' ? 'sorted descending' : 'sorted ascending'}</span>
+                    {column.isSorted && column.isShift && (
+                      <div className={classes.queue}>
+                        <span className={classes.qText}>{column.queue} </span>
+                      </div>
+                    )}
                   </TableSortLabel>
                 </TableCell>
               )}
-            </>
+            </React.Fragment>
           ))}
         </TableRow>
       </TableHead>
@@ -95,7 +111,6 @@ export default TableHeader;
 TableHeader.propTypes = {
   onCreateSort: PropTypes.func.isRequired,
   onSelectAllClick: PropTypes.func.isRequired,
-  order: PropTypes.oneOf(['asc', 'desc']).isRequired,
   orderBy: PropTypes.string.isRequired,
   columns: PropTypes.arrayOf(Object).isRequired,
   selected: PropTypes.arrayOf(PropTypes.number).isRequired,

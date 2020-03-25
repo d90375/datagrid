@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
@@ -10,10 +10,7 @@ import Input from '@material-ui/core/Input';
 import Checkbox from '@material-ui/core/Checkbox';
 import ListItemText from '@material-ui/core/ListItemText';
 import PropTypes from 'prop-types';
-import { useDispatch, useSelector } from 'react-redux';
 import { ageCategory } from '../../../constants';
-import { setEnumList } from '../../../store/actions/dataAction';
-import TableNav from '../TableNav';
 
 const useStyles = makeStyles(() => ({
   root: {

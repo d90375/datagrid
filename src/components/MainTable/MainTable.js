@@ -51,7 +51,6 @@ const MainTable = ({
   selected,
   onDelete,
 }) => {
-
   const [styledTableHeight, setStyledTableHeight] = useState(rowHeight * rows.length);
   const [tableHeight, setTableHeight] = useState(rowHeight * VIRT_ROW_COUNT);
   const [scroll, setScroll] = useState({
@@ -79,7 +78,6 @@ const MainTable = ({
     setScroll({ ...scroll, top: newStateTop, index: newStateIndex, end: newStateEnd });
   };
 
-
   return (
     <div className={classes.root}>
       <Paper elevation={3} className={classes.paper}>
@@ -95,7 +93,6 @@ const MainTable = ({
             <TableHeader
               selected={selected}
               columns={columns}
-              order={order}
               orderBy={orderBy}
               onSelectAllClick={onSelectAllClick}
               onCreateSort={onCreateSort}

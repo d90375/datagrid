@@ -12,16 +12,6 @@ import CheckBoxCell from './CheckBoxCell/CheckBoxCell';
 import CellSwitcher from './CellSwitcher';
 import { setRowSelected } from '../../../store/actions/selectAction';
 
-// const StyledTableRow = withStyles((theme: Theme) =>
-//     createStyles({
-//       root: {
-//         '&:nth-of-type(odd)': {
-//           backgroundColor: theme.palette.background.default,
-//         },
-//       },
-//     }),
-// )(TableRow);]
-
 const useStyles = makeStyles(() => ({
   tBody: prop => ({
     position: 'relative',

@@ -1,19 +1,20 @@
 import { SET_SEARCH, LOAD_PRELOADER, LOAD_DATA_SUCCESS, LOAD_DATA_ERROR, DELETE_ITEM, SWITCH_FILTER } from '../actionTypes';
 
+
+// const DATA = load({ namespace: 'grid' });
+// let initialState = DATA.sortReducer;
+//
+// if (!initialState) {
+//
+// }
+
 const initialState = {
-  staticData: [],
-  data: [],
+  currentData: [],
+  data: [1],
   isLoading: true,
   error: '',
   searchValue: '',
   selectedEnumList: [],
-  visibleColumns: {
-    isAge: true,
-    isSalary: true,
-    isDistance: true,
-    isHackedData: true,
-    isStatus: true,
-  },
 };
 
 const dataReducer = (state = initialState, action) => {
@@ -28,7 +29,7 @@ const dataReducer = (state = initialState, action) => {
     case LOAD_DATA_SUCCESS: {
       return {
         ...state,
-        staticData: action.data,
+        currentData: action.data,
         data: action.data,
         isLoading: true,
       };
@@ -46,11 +47,12 @@ const dataReducer = (state = initialState, action) => {
       }
       const notSelectedCorrect = id => action.selected.indexOf(id) === -1;
       const newData = state.data.filter(item => notSelectedCorrect(+item.id));
+      state.currentData = newData;
       return { ...state, data: newData };
     }
     case SET_SEARCH:
       if (action.searchValue !== '') {
-        const result = state.data.filter(
+        const result = state.currentData.filter(
           item =>
             item.firstName.toLowerCase().includes(action.searchValue.toLowerCase()) ||
             item.lastName.toLowerCase().includes(action.searchValue.toLowerCase()) ||
@@ -59,17 +61,14 @@ const dataReducer = (state = initialState, action) => {
         );
         return { ...state, data: result, searchValue: action.searchValue };
       }
-      return { ...state, data: state.staticData, searchValue: action.searchValue };
+      return { ...state, data: state.currentData, searchValue: action.searchValue };
     case SWITCH_FILTER:
       state.selectedEnumList = action.value;
       if (state.selectedEnumList.length > 0) {
-        console.log(state.selectedEnumList);
-        const result = state.data.filter(item => state.selectedEnumList.some(el => el === item.ageCategory));
-        console.log(result);
+        const result = state.currentData.filter(item => action.value.some(el => el === item.ageCategory));
         return { ...state, data: result };
       }
-      return { ...state, data: state.staticData };
-
+      return { ...state, data: state.currentData };
     default:
       return state;
   }

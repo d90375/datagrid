@@ -1,23 +1,37 @@
+import { SORT_ASC } from '../constants';
+
 const columns = [
-  { id: 'id', label: 'Id', width: 70, align: 'left' },
-  { id: 'firstName', label: 'First name', width: 130, align: 'left' },
+  { id: 'id', label: 'Id', width: 70, align: 'left', isSorted: false, order: SORT_ASC, queue: 1 },
+  { id: 'firstName', label: 'First name', width: 130, align: 'left', isSorted: false, order: SORT_ASC, queue: 1 },
   {
     id: 'lastName',
     label: 'Last name',
     width: 150,
     align: 'left',
+    isSorted: false,
+    order: SORT_ASC,
+    queue: 1,
+    isShift: false,
   },
   {
     id: 'address',
     label: 'Address',
     width: 150,
     align: 'left',
+    isSorted: false,
+    order: SORT_ASC,
+    queue: 1,
+    isShift: false,
   },
   {
     id: 'ageCategory',
     label: 'Age',
     width: 90,
     align: 'left',
+    isSorted: false,
+    order: SORT_ASC,
+    queue: 1,
+    isShift: false,
   },
   {
     id: 'salary',
@@ -25,6 +39,10 @@ const columns = [
     width: 150,
     align: 'left',
     format: value => value.toLocaleString(),
+    isSorted: false,
+    order: SORT_ASC,
+    queue: 1,
+    isShift: false,
   },
   {
     id: 'distance',
@@ -32,12 +50,20 @@ const columns = [
     width: 150,
     align: 'left',
     format: value => value.toFixed(5),
+    isSorted: false,
+    order: SORT_ASC,
+    queue: 1,
+    isShift: false,
   },
   {
     id: 'hackedDate',
     label: 'Hacked date',
     width: 150,
     align: 'center',
+    isSorted: false,
+    order: SORT_ASC,
+    queue: 1,
+    isShift: false,
   },
   {
     id: 'status',
@@ -45,6 +71,10 @@ const columns = [
     disablePadding: true,
     width: 100,
     align: 'center',
+    isSorted: false,
+    order: SORT_ASC,
+    queue: 1,
+    isShift: false,
   },
 ];
 
