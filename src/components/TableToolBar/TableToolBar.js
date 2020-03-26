@@ -16,6 +16,7 @@ const useToolbarStyles = makeStyles(() => ({
     padding: '0 4px',
     display: 'flex',
     justifyContent: 'space-between',
+    position: 'sticky',
   },
 }));
 

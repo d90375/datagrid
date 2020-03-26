@@ -34,6 +34,7 @@ const useStyles = makeStyles({
   },
   checkbox: {
     padding: 0,
+    zIndex: '10',
   },
 });
 

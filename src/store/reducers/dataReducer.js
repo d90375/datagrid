@@ -25,17 +25,6 @@ if (!DATA || !dataState) {
     disableBool: false,
   };
 }
-//
-// const dataState = {
-//   currentData: [],
-//   data: [],
-//   isLoading: true,
-//   error: '',
-//   searchValue: '',
-//   selectedEnumList: [],
-//   activeBool: false,
-//   disableBool: false,
-// };
 
 const dataReducer = (state = dataState, action) => {
   switch (action.type) {
