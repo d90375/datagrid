@@ -10,7 +10,7 @@ import TableHeader from './TableHeader/TableHeader';
 import TableGrid from './TableGrid/TableGrid';
 import TableToolBar from '../TableToolBar/TableToolBar';
 
-import { VIRT_ROW_COUNT } from '../../constants';
+import { HEADER_ROW_HEIGHT, VIRT_ROW_COUNT } from '../../constants';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -29,7 +29,7 @@ const useStyles = makeStyles(theme => ({
     overflowY: 'scroll',
     borderCollapse: 'collapse',
     display: 'block',
-    height: prop.tableHeight > prop.styledTableHeight ? prop.styledTableHeight + 2 : '578px',
+    height: prop.tableHeight > prop.styledTableHeight ? prop.styledTableHeight + 2 + HEADER_ROW_HEIGHT : '578px',
   }),
   container: {
     borderRadius: '.4rem',
