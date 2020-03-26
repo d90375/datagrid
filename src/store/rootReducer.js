@@ -1,10 +1,16 @@
 import { combineReducers } from 'redux';
-import selectReducer from './reducers/select';
-import switchReducer from './reducers/switch';
-import searchReducer from './reducers/data';
+import selectReducer from './reducers/selectReducer';
+import switchVirtReducer from './reducers/switchVirtReducer ';
+import dataReducer from './reducers/dataReducer';
+import columnReducer from './reducers/columnReducer';
+import sortReducer from './reducers/sortReducer';
 
-export default combineReducers({
+const rootReducer = combineReducers({
+  sortReducer,
+  columnReducer,
   selectReducer,
-  switchReducer,
-  searchReducer,
+  switchVirtReducer,
+  dataReducer,
 });
+
+export default rootReducer;

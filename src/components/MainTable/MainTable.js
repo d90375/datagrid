@@ -6,10 +6,11 @@ import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
 
 import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
 import TableHeader from './TableHeader/TableHeader';
 import TableGrid from './TableGrid/TableGrid';
 import TableToolBar from '../TableToolBar/TableToolBar';
+
+import { HEADER_ROW_HEIGHT, VIRT_ROW_COUNT } from '../../constants';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -28,7 +29,7 @@ const useStyles = makeStyles(theme => ({
     overflowY: 'scroll',
     borderCollapse: 'collapse',
     display: 'block',
-    height: prop.tableHeight > prop.styledTableHeight ? prop.styledTableHeight + 2 : '578px',
+    height: prop.tableHeight > prop.styledTableHeight ? prop.styledTableHeight + 2 + HEADER_ROW_HEIGHT : '578px',
   }),
   container: {
     borderRadius: '.4rem',
@@ -36,24 +37,35 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const MainTable = ({ rows, columns, rowHeight }) => {
-  const virt = useSelector(state => state.switchReducer);
-  const [order, setOrder] = useState('asc');
-  const [orderBy, setOrderBy] = useState('id');
-  const [styledTableHeight] = useState(rowHeight * rows.length);
-  const [tableHeight, setTableHeight] = useState(350);
+const MainTable = ({
+  rows,
+  columns,
+  visibleColumns,
+  rowHeight,
+  isVirt,
+  order,
+  orderBy,
+  onCreateSort,
+  onSelectAllClick,
+  onChangeVisible,
+  selected,
+  onDelete,
+}) => {
+  const [styledTableHeight, setStyledTableHeight] = useState(rowHeight * rows.length);
+  const [tableHeight, setTableHeight] = useState(rowHeight * VIRT_ROW_COUNT);
   const [scroll, setScroll] = useState({
     top: 0,
     index: 0,
     end: Math.ceil((tableHeight * 2) / rowHeight),
   });
 
-  useEffect(() => {
-    setTableHeight(virt ? 350 : styledTableHeight);
-  }, [styledTableHeight, virt]);
-
   const prop = { styledTableHeight, tableHeight };
   const classes = useStyles(prop);
+
+  useEffect(() => {
+    setStyledTableHeight(rowHeight * rows.length);
+    setTableHeight(isVirt ? rowHeight * VIRT_ROW_COUNT : styledTableHeight);
+  }, [rowHeight, rows.length, styledTableHeight, isVirt]);
 
   const handleOnScroll = ({ target }) => {
     const { scrollTop } = target;
@@ -66,16 +78,10 @@ const MainTable = ({ rows, columns, rowHeight }) => {
     setScroll({ ...scroll, top: newStateTop, index: newStateIndex, end: newStateEnd });
   };
 
-  const handleRequestSort = (event, property) => {
-    const isAsc = orderBy === property && order === 'asc';
-    setOrder(isAsc ? 'desc' : 'asc');
-    setOrderBy(property);
-  };
-
   return (
     <div className={classes.root}>
       <Paper elevation={3} className={classes.paper}>
-        <TableToolBar />
+        <TableToolBar onDelete={onDelete} visibleColumns={visibleColumns} onChangeVisible={onChangeVisible} />
         <TableContainer className={classes.container}>
           <Table
             onScroll={handleOnScroll}
@@ -85,14 +91,16 @@ const MainTable = ({ rows, columns, rowHeight }) => {
             aria-label="data grid"
           >
             <TableHeader
-              rows={rows}
+              selected={selected}
               columns={columns}
-              order={order}
               orderBy={orderBy}
-              onRequestSort={handleRequestSort}
+              onSelectAllClick={onSelectAllClick}
+              onCreateSort={onCreateSort}
               rowCount={rows.length}
+              visibleColumns={visibleColumns}
             />
             <TableGrid
+              selected={selected}
               rows={rows}
               columns={columns}
               order={order}
@@ -100,6 +108,7 @@ const MainTable = ({ rows, columns, rowHeight }) => {
               scroll={scroll}
               rowHeight={rowHeight}
               styledTableHeight={styledTableHeight}
+              visibleColumns={visibleColumns}
             />
           </Table>
         </TableContainer>
@@ -114,8 +123,32 @@ MainTable.defaultProps = {
 
 MainTable.propTypes = {
   rowHeight: PropTypes.number,
-  rows: PropTypes.arrayOf(PropTypes.object).isRequired,
+  isVirt: PropTypes.bool.isRequired,
+  order: PropTypes.string.isRequired,
+  orderBy: PropTypes.string.isRequired,
+  onCreateSort: PropTypes.func.isRequired,
+  onSelectAllClick: PropTypes.func.isRequired,
+  rows: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number,
+      firstName: PropTypes.string,
+      lastName: PropTypes.string,
+      address: PropTypes.shape({
+        state: PropTypes.string,
+        city: PropTypes.string,
+      }),
+      ageCategory: PropTypes.number,
+      salary: PropTypes.number,
+      distance: PropTypes.number,
+      hackedDate: PropTypes.string,
+      status: PropTypes.bool,
+    })
+  ).isRequired,
+  onDelete: PropTypes.func.isRequired,
+  selected: PropTypes.arrayOf(PropTypes.number).isRequired,
   columns: PropTypes.arrayOf(PropTypes.object).isRequired,
+  visibleColumns: PropTypes.objectOf(PropTypes.bool).isRequired,
+  onChangeVisible: PropTypes.func.isRequired,
 };
 
 export default MainTable;

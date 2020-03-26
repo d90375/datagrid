@@ -7,19 +7,6 @@ import TableSortLabel from '@material-ui/core/TableSortLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 
 import { makeStyles } from '@material-ui/core/styles';
-import { useDispatch, useSelector } from 'react-redux';
-import { setAllRowSelected } from '../../../store/actions/select';
-import HeaderButton from './HeaderButton/HeaderButton';
-
-// const StyledTableCell = withStyles((theme: Theme) =>
-//   createStyles({
-//     head: {
-//       backgroundColor: theme.palette.common.black,
-//       color: theme.palette.common.white,
-//       fontSize: '1.3em',
-//     },
-//   })
-// )(TableCell);
 
 const useStyles = makeStyles({
   visuallyHidden: {
@@ -33,51 +20,86 @@ const useStyles = makeStyles({
     top: 20,
     width: 1,
   },
+  queue: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '18px',
+    height: '18px',
+    backgroundColor: '#5659A3',
+    borderRadius: '50%',
+  },
+  qText: {
+    color: '#FFF',
+  },
+  checkbox: {
+    padding: 0,
+    zIndex: '10',
+  },
 });
 
-const TableHeader = ({ rows, columns, order, orderBy, onRequestSort, rowCount }) => {
+const TableHeader = ({
+  columns,
+  selected,
+  orderBy,
+  onCreateSort,
+  onSelectAllClick,
+  rowCount,
+  visibleColumns: { isAge, isSalary, isDistance, isHackedData, isStatus },
+}) => {
   const classes = useStyles();
-  const dispatch = useDispatch();
-  const selected = useSelector(state => state.selectReducer);
-  const handleSelectAllClick = event => {
-    dispatch(setAllRowSelected(event, rows));
-  };
 
-  const createSortHandler = property => event => {
-    onRequestSort(event, property);
+  const visibleColumns = {
+    id: true,
+    firstName: true,
+    lastName: true,
+    address: true,
+    ageCategory: isAge,
+    salary: isSalary,
+    distance: isDistance,
+    hackedDate: isHackedData,
+    status: isStatus,
   };
 
   return (
     <>
       <TableHead>
         <TableRow>
-          <TableCell padding="checkbox">
+          <TableCell className={classes.checkbox} padding="checkbox">
             <Checkbox
               indeterminate={selected.length > 0 && selected.length < rowCount}
               checked={rowCount > 0 && selected.length === rowCount}
-              onChange={handleSelectAllClick}
+              onChange={onSelectAllClick}
               inputProps={{ 'aria-label': 'select all desserts' }}
             />
           </TableCell>
           {columns.map(column => (
-            <>
-              <TableCell
-                style={{ minWidth: column.width }}
-                padding={column.disablePadding ? 'none' : 'default'}
-                sortDirection={orderBy === column.id ? order : false}
-                align={column.align}
-              >
-                <HeaderButton />
-                <TableSortLabel
-                  active={orderBy === column.id}
-                  direction={orderBy === column.id ? order : 'asc'}
-                  onClick={createSortHandler(column.id)}
+            <React.Fragment key={`header #${column.id}`}>
+              {visibleColumns[column.id] && (
+                <TableCell
+                  key={`header #${column.id}`}
+                  style={{ minWidth: column.width }}
+                  padding={column.disablePadding ? 'none' : 'default'}
+                  sortDirection={orderBy === column.id ? column.order : false}
+                  align={column.align}
+                  title="Hold shift to sort a few columns"
                 >
-                  {column.label}
-                  <span className={classes.visuallyHidden}>{order === 'desc' ? 'sorted descending' : 'sorted ascending'}</span>
-                </TableSortLabel>
-              </TableCell>
-            </>
+                  <TableSortLabel
+                    active={orderBy === column.id}
+                    direction={orderBy === column.id ? column.order : 'asc'}
+                    onClick={onCreateSort(column)}
+                  >
+                    {column.label}
+                    <span className={classes.visuallyHidden}>{column.order === 'desc' ? 'sorted descending' : 'sorted ascending'}</span>
+                    {column.isSorted && column.isShift && (
+                      <div className={classes.queue}>
+                        <span className={classes.qText}>{column.queue} </span>
+                      </div>
+                    )}
+                  </TableSortLabel>
+                </TableCell>
+              )}
+            </React.Fragment>
           ))}
         </TableRow>
       </TableHead>
@@ -88,8 +110,11 @@ const TableHeader = ({ rows, columns, order, orderBy, onRequestSort, rowCount })
 export default TableHeader;
 
 TableHeader.propTypes = {
-  onRequestSort: PropTypes.func.isRequired,
-  order: PropTypes.oneOf(['asc', 'desc']).isRequired,
+  onCreateSort: PropTypes.func.isRequired,
+  onSelectAllClick: PropTypes.func.isRequired,
   orderBy: PropTypes.string.isRequired,
+  columns: PropTypes.arrayOf(Object).isRequired,
+  selected: PropTypes.arrayOf(PropTypes.number).isRequired,
   rowCount: PropTypes.number.isRequired,
+  visibleColumns: PropTypes.objectOf(PropTypes.bool).isRequired,
 };

@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import SearchIcon from '@material-ui/icons/Search';
-import { useDispatch, useSelector } from 'react-redux';
-import { setSearch } from '../../../../store/actions/data';
+import PropTypes from 'prop-types';
 
 const useStyles = makeStyles(theme => ({
   margin: {
@@ -14,8 +13,6 @@ const useStyles = makeStyles(theme => ({
     color: '#FFF',
   },
   container: {
-    alignSelf: 'flex-end',
-    marginBottom: '2.5rem',
     marginLeft: '2rem',
   },
 }));
@@ -29,6 +26,9 @@ const SearchTextField = withStyles({
       borderBottomColor: '#FFF',
     },
     '& .MuiFormLabel-root': {
+      color: '#FFF',
+    },
+    '& .MuiInputBase-input': {
       color: '#FFF',
     },
     '& .MuiOutlinedInput-root': {
@@ -45,27 +45,17 @@ const SearchTextField = withStyles({
   },
 })(TextField);
 
-function InputTextField({ handleValueChanged, value }) {
+const InputTextField = ({ handleValueChanged, value }) => {
   return <SearchTextField fullWidth id="filled-helperText" label="Search Name,State,City" onChange={handleValueChanged} value={value} />;
-}
+};
 
-const Search = () => {
+InputTextField.propTypes = {
+  handleValueChanged: PropTypes.func.isRequired,
+  value: PropTypes.string.isRequired,
+};
+
+const Search = ({ searchValueText, onValueChanged }) => {
   const classes = useStyles();
-  const dispatch = useDispatch();
-  const search = useSelector(state => state.searchReducer);
-  const handleValueChanged = event => {
-    dispatch(setSearch(event.target.value));
-  };
-
-  // const handleValueChanged = event => {
-  //   dispatch(setSearch(event.target.value));
-  // };
-
-  // const keyPressHandler = event => {
-  //   if (event.keyCode === 13) {
-  //     dispatch(setSearch(''));
-  //   }
-  // };
 
   return (
     <>
@@ -76,7 +66,7 @@ const Search = () => {
               <SearchIcon className={classes.icon} />
             </Grid>
             <Grid item>
-              <InputTextField value={search} handleValueChanged={handleValueChanged} />
+              <InputTextField value={searchValueText} handleValueChanged={onValueChanged} />
             </Grid>
           </Grid>
         </div>
@@ -86,3 +76,8 @@ const Search = () => {
 };
 
 export default Search;
+
+Search.propTypes = {
+  searchValueText: PropTypes.string.isRequired,
+  onValueChanged: PropTypes.func.isRequired,
+};

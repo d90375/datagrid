@@ -1,6 +1,14 @@
+import { load } from 'redux-localstorage-simple';
 import { SELECT_ALL_ITEMS, SELECT_ITEM } from '../actionTypes';
 
-const selectReducer = (state = [], action) => {
+const DATA = load({ namespace: 'grid' });
+let selected = DATA.selectReducer;
+
+if (!selected) {
+  selected = [];
+}
+
+const selectReducer = (state = selected, action) => {
   let selectedIndex;
   let newSelected;
   switch (action.type) {

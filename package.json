@@ -15,11 +15,14 @@
     "@types/react-router-dom": "^5.1.2",
     "clsx": "^1.1.0",
     "prop-types": "^15.7.2",
+    "query-string": "^6.11.1",
     "react": "^16.13.0",
+    "react-csv": "^2.0.1",
     "react-dom": "^16.13.0",
     "react-redux": "^7.2.0",
     "react-router-dom": "^5.1.2",
     "redux": "^4.0.5",
+    "redux-localstorage-simple": "^2.1.6",
     "redux-thunk": "^2.3.0",
     "typeface-roboto": "^0.0.75"
   },
@@ -49,8 +52,6 @@
     ]
   },
   "devDependencies": {
-    "@babel/core": "^7.8.6",
-    "babel-loader": "^8.0.6",
     "eslint": "^6.8.0",
     "eslint-config-airbnb": "^18.0.1",
     "eslint-config-airbnb-base": "^14.0.0",
