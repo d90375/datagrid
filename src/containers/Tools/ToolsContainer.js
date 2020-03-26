@@ -18,9 +18,10 @@ const ToolsLogicContainer = ({ searchRoute }) => {
   }));
 
   useEffect(() => {
-    const { SearchText } = queryString.parse(searchRoute);
-    if (SearchText) {
+    const { ENUM, SearchText } = queryString.parse(searchRoute);
+    if (ENUM || SearchText) {
       dispatch(setSearch(SearchText));
+      dispatch(setEnumList([+ENUM]));
     }
   }, [dispatch, searchRoute]);
 

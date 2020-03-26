@@ -2,7 +2,7 @@ import { SORT_ASC } from '../constants';
 
 const columns = [
   { id: 'id', label: 'Id', width: 70, align: 'left', isSorted: false, order: SORT_ASC, queue: 1 },
-  { id: 'firstName', label: 'First name', width: 130, align: 'left', isSorted: false, order: SORT_ASC, queue: 1 },
+  { id: 'firstName', label: 'First name', width: 140, align: 'left', isSorted: false, order: SORT_ASC, queue: 1 },
   {
     id: 'lastName',
     label: 'Last name',

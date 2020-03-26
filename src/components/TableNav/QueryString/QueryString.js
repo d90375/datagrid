@@ -25,7 +25,7 @@ const QueryString = () => {
         variant="outlined"
         color="secondary"
         component={Link}
-        to="/?SearchText=may"
+        to="/?ENUM=18&SearchText=may"
         startIcon={<ImportExportIcon />}
       >
         Query

@@ -18,11 +18,15 @@ if (!DATA || !dataState) {
     searchValue: '',
     selectedEnumList: [],
     isLoading: true,
-    currentData: [],
+    staticData: [],
     data: [],
     error: '',
     activeBool: false,
     disableBool: false,
+    isSearchFilter: false,
+    isSwitchFilter: false,
+    isActiveFilter: false,
+    isDisableFilter: false,
   };
 }
 
@@ -37,22 +41,22 @@ const dataReducer = (state = dataState, action) => {
     }
     case BOOL_ACTIVE_FILTER: {
       if (!state.activeBool) {
-        const result = state.currentData.filter(item => item.status !== state.activeBool && !state.disableBool);
+        const result = state.staticData.filter(item => item.status !== state.activeBool && !state.disableBool);
         return { ...state, data: result, activeBool: !state.activeBool };
       }
-      return { ...state, data: state.currentData, activeBool: !state.activeBool };
+      return { ...state, data: state.staticData, activeBool: !state.activeBool };
     }
     case BOOL_DISABLE_FILTER: {
       if (!state.disableBool) {
-        const result = state.currentData.filter(item => item.status === state.disableBool && !state.activeBool);
+        const result = state.staticData.filter(item => item.status === state.disableBool && !state.activeBool);
         return { ...state, data: result, disableBool: !state.disableBool };
       }
-      return { ...state, data: state.currentData, disableBool: !state.disableBool };
+      return { ...state, data: state.staticData, disableBool: !state.disableBool };
     }
     case LOAD_DATA_SUCCESS: {
       return {
         ...state,
-        currentData: action.data,
+        staticData: action.data,
         data: action.data,
         isLoading: true,
       };
@@ -70,12 +74,11 @@ const dataReducer = (state = dataState, action) => {
       }
       const notSelectedCorrect = id => action.selected.indexOf(id) === -1;
       const newData = state.data.filter(item => notSelectedCorrect(+item.id));
-      state.currentData = newData;
       return { ...state, data: newData };
     }
     case SET_SEARCH:
       if (action.searchValue !== '') {
-        const result = state.currentData.filter(
+        const result = state.staticData.filter(
           item =>
             item.firstName.toLowerCase().includes(action.searchValue.toLowerCase()) ||
             item.lastName.toLowerCase().includes(action.searchValue.toLowerCase()) ||
@@ -84,14 +87,14 @@ const dataReducer = (state = dataState, action) => {
         );
         return { ...state, data: result, searchValue: action.searchValue };
       }
-      return { ...state, data: state.currentData, searchValue: action.searchValue };
+      return { ...state, data: state.staticData, searchValue: action.searchValue };
     case SWITCH_FILTER:
       state.selectedEnumList = action.value;
       if (state.selectedEnumList.length > 0) {
-        const result = state.currentData.filter(item => action.value.some(el => el === item.ageCategory));
+        const result = state.staticData.filter(item => action.value.some(el => el === item.ageCategory));
         return { ...state, data: result };
       }
-      return { ...state, data: state.currentData };
+      return { ...state, data: state.staticData };
     default:
       return state;
   }
