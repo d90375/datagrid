@@ -25,6 +25,25 @@ const useStyles = makeStyles(theme => ({
   colorDisabled: {
     color: 'gray',
   },
+  dotActive: {
+    height: '10px',
+    width: '10px',
+    backgroundColor: theme.custom.color.active,
+    borderRadius: '50%',
+    marginRight: theme.spacing(1),
+    display: 'inline-block',
+  },
+  dotDisable: {
+    height: '10px',
+    width: '10px',
+    backgroundColor: theme.palette.primary.light,
+    borderRadius: '50%',
+    marginRight: theme.spacing(1),
+    display: 'inline-block',
+  },
+  colorDotDisabled: {
+    backgroundColor: 'gray',
+  },
 }));
 
 const BooleanTool = () => {
@@ -45,12 +64,12 @@ const BooleanTool = () => {
   return (
     <div className={classes.root}>
       <Button className={clsx(classes.active, { [classes.colorDisabled]: !activeBool })} onClick={onActiveSort}>
-        <DotActive />
+        <div className={clsx(classes.dotActive, { [classes.colorDotDisabled]: !activeBool })} />
         <span>Active</span>
       </Button>
 
       <Button className={clsx(classes.disable, { [classes.colorDisabled]: !disableBool })} onClick={onDisableSort}>
-        <DotDisable />
+        <div className={clsx(classes.dotDisable, { [classes.colorDotDisabled]: !disableBool })} />
         <span>Disabled</span>
       </Button>
     </div>
